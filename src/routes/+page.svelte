@@ -3,11 +3,14 @@
 
   let file_path = $state("");
   let resolution = $state("");
+  let path_message = $state("");
 
   async function select_file(event: Event) {
     event.preventDefault();
     file_path = await invoke("select_file", {});
-    resolution = await invoke("get_resolution", { path: file_path });
+    resolution =
+      "Info:\n" + (await invoke("list_details", { path: file_path }));
+    path_message = "File Path: " + file_path;
   }
 </script>
 
@@ -18,8 +21,9 @@
   <button onclick={select_file}>
     Select File
   </button>
-  <p>File path: {file_path}</p>
-  <p>Resolution: {resolution}</p>
+
+  <p>{path_message}</p>
+  <p class="multiline">{resolution}</p>
 </main>
 
 <style>
