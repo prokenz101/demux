@@ -96,3 +96,18 @@ fn get_precise_format_name(cont_format: &ffmpeg_next::format::Input, path: &Stri
     }
 }
 
+#[allow(dead_code)]
+pub fn get_general_details(ictx: &Input, path: &String) -> String {
+    let container_format = ictx.format();
+
+    let decoder = get_decoder(&ictx).expect("Failed to get decoder");
+    let (width, height) = get_resolution(&decoder);
+
+    return format!(
+        "Resolution: {}x{}\nFormat: {}\nDescription: {}",
+        width,
+        height,
+        get_precise_format_name(&container_format, &path),
+        container_format.description()
+    );
+}
