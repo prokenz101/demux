@@ -1,12 +1,12 @@
-use tauri::AppHandle;
 use tauri_plugin_dialog::DialogExt;
+use tauri::WebviewWindow;
 
 mod ffmpeg;
 use ffmpeg::{get_input_context, get_general_details};
 
 #[tauri::command]
-fn select_file(app: AppHandle) -> Option<String> {
-    return app
+async fn select_file(window: WebviewWindow) -> Option<String> {
+    window
         .dialog()
         .file()
         .set_parent(&window)
