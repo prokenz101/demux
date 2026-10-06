@@ -15,7 +15,7 @@
 </script>
 
 <main class="container" lang="ts">
-  <h1>Welcome to demux</h1>
+  <h1>demux</h1>
 
   <!--* file picker -->
   <button onclick={select_file}>
