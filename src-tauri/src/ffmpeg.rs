@@ -104,12 +104,24 @@ pub fn get_general_details(ictx: &Input, path: &String) -> String {
 
     let decoder = get_decoder(&ictx).expect("Failed to get decoder");
     let (width, height) = get_resolution(&decoder);
+    if has_video_streams(ictx) {
+        let decoder = get_decoder(ictx).expect("Failed to get decoder");
+        let (width, height) = get_resolution(&decoder);
 
-    return format!(
-        "Resolution: {}x{}\nFormat: {}\nDescription: {}",
-        width,
-        height,
-        get_precise_format_name(&container_format, &path),
-        container_format.description()
-    );
+        return format!(
+            "Resolution: {}x{}\nFormat: {}\nDescription: {}",
+            width,
+            height,
+            get_precise_format_name(ictx, path),
+            container_format.description()
+        );
+    } else {
+        return format!(
+            "No video stream detected.\nFormat: {}\nDescription: {}",
+            get_precise_format_name(ictx, path),
+            container_format.description()
+        );
+    }
+}
+
 }
