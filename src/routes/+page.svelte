@@ -2,13 +2,13 @@
   import { invoke } from "@tauri-apps/api/core";
 
   let file_path = $state("");
-  let resolution = $state("");
+  let details = $state("");
   let path_message = $state("");
 
   async function select_file(event: Event) {
     event.preventDefault();
     file_path = await invoke("select_file", {});
-    resolution =
+    details =
       "Info:\n" + (await invoke("list_details", { path: file_path }));
     path_message = "File Path: " + file_path;
   }
@@ -23,7 +23,7 @@
   </button>
 
   <p>{path_message}</p>
-  <p class="multiline">{resolution}</p>
+  <p class="multiline">{details}</p>
 </main>
 
 <style>

@@ -1,4 +1,8 @@
-use ffmpeg_next::{decoder::Video, format::context::Input};
+use ffmpeg_next::{
+    decoder::Video,
+    format::{context::Input, stream::Disposition},
+    media::Type,
+};
 use std::{fs::File, io::Read, path::Path};
 
 /// Returns the ffmpeg media input context.
@@ -12,11 +16,10 @@ pub fn get_input_context(path: &String) -> Result<Input, String> {
     Ok(ictx)
 }
 
-#[allow(dead_code)]
 fn get_decoder(ictx: &Input) -> Result<Video, String> {
     let best_video = &ictx
         .streams()
-        .best(ffmpeg_next::media::Type::Video)
+        .best(Type::Video)
         .ok_or_else(|| "No video stream found in file".to_string())?;
 
     let decoder = ffmpeg_next::codec::context::Context::from_parameters(best_video.parameters())
@@ -28,7 +31,6 @@ fn get_decoder(ictx: &Input) -> Result<Video, String> {
     Ok(decoder)
 }
 
-#[allow(dead_code)]
 fn get_resolution(decoder: &Video) -> (u32, u32) {
     return (decoder.width(), decoder.height());
 }
@@ -49,10 +51,10 @@ fn get_precise_format_name(cont_format: &ffmpeg_next::format::Input, path: &Stri
         Some(buffer)
     }
 
-    if cont_format_name == "matroska,webm" {
         //* Checking EBML doctype to distinguish between Matroska and WebM
         fn check_ebml_doctype(path: &String) -> Option<String> {
             let header = get_header(path, EBML_HEADER_SIZE)?;
+    match cfn.as_str() {
 
             if header.windows(4).any(|window| window == b"webm") {
                 Some("WebM".to_string())
