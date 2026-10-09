@@ -105,7 +105,6 @@ fn get_precise_format_name(ictx: &Input, path: &String) -> String {
         },
         "hevc" => "HEVC (h265)".to_owned(),
         "h264" => "AVC (h264)".to_owned(),
-        "cfn" => "AIFF".to_owned(),
         _ => cfn.clone()
     }
 }
