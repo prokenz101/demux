@@ -2,7 +2,7 @@ use tauri::WebviewWindow;
 use tauri_plugin_dialog::DialogExt;
 
 pub mod ffmpeg;
-pub mod formats;
+pub mod containers;
 use ffmpeg::{get_general_details, get_input_context};
 
 #[tauri::command]

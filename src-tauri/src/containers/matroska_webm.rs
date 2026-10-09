@@ -1,4 +1,4 @@
-use crate::formats::format::get_header;
+use crate::containers::format::get_header;
 
 pub fn check_ebml_doctype(path: &String) -> Option<&'static str> {
     let header = get_header(path, 128)?;
