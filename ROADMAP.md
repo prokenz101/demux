@@ -1,123 +1,123 @@
 ### Roadmap:
-'**✓**' -> Done, '**-**' -> In progress, '**X**' -> Not started
+[X] -> Done, '**[-]**' -> In progress, [ ] -> Not started
 
-- __[✓] Select and read files__
+- __[X] Select and read files__
 - [-] Display media information
     - [-] General media
-        - __[✓] Name / File path__
-        - __[✓] Container format name (MPEG-4, Matroska, etc.)__
-        - [X] Format profile
+        - __[X] Name / File path__
+        - __[X] Container format name (MPEG-4, Matroska, etc.)__
+        - [ ] Format profile
         - [-] Codec ID:
             - [-] Major brand
             - [-] All Compatible brands
-        - [X] File size
-        - [X] Duration
-        - [X] Bitrate
-        - [X] Encoded date
-        - [X] Writing application
+        - [ ] File size
+        - [ ] Duration
+        - [ ] Bitrate
+        - [ ] Encoded date
+        - [ ] Writing application
 
     - [-] Video
-        - [X] ID (Stream ID)
-        - [X] Codec format
-        - [X] Codec format info
-        - [X] Codec format profile
-        - [X] HDR format
-        - [X] Codec ID
-        - [X] Codec ID info
-        - [X] Video duration
-        - [X] Source duration
-        - [X] Bitrate
-        - [X] Maximum bitrate
-        - [X] Width (in px)
-        - [X] Height (in px)
-        - [X] Aspect ratio
-        - [X] Frame rate mode
-        - [X] Frame rate
-        - [X] Color space
-        - [X] Chroma subsampling
-        - [X] Bit depth
-        - [X] Bits / (Pixel * Frame)
-        - [X] Stream size
-        - [X] Source stream size
-        - [X] Writing library
-        - [X] Encoding settings
-        - [X] Encoded date
-        - [X] Tagged date
-        - [X] Color range
-        - [X] Color primaries
-        - [X] Transfer characteristics
-        - [X] Matrix coefficients
-        - [X] Codec configuration box
-        - [X] Mastering display color primaries (HDR)
-        - [X] Mastering display luminance (HDR)
-        - [X] Maximum content light level (HDR)
-        - [X] Maximum frame average light level (HDR)
+        - [ ] ID (Stream ID)
+        - [ ] Codec format
+        - [ ] Codec format info
+        - [ ] Codec format profile
+        - [ ] HDR format
+        - [ ] Codec ID
+        - [ ] Codec ID info
+        - [ ] Video duration
+        - [ ] Source duration
+        - [ ] Bitrate
+        - [ ] Maximum bitrate
+        - [ ] Width (in px)
+        - [ ] Height (in px)
+        - [ ] Aspect ratio
+        - [ ] Frame rate mode
+        - [ ] Frame rate
+        - [ ] Color space
+        - [ ] Chroma subsampling
+        - [ ] Bit depth
+        - [ ] Bits / (Pixel * Frame)
+        - [ ] Stream size
+        - [ ] Source stream size
+        - [ ] Writing library
+        - [ ] Encoding settings
+        - [ ] Encoded date
+        - [ ] Tagged date
+        - [ ] Color range
+        - [ ] Color primaries
+        - [ ] Transfer characteristics
+        - [ ] Matrix coefficients
+        - [ ] Codec configuration box
+        - [ ] Mastering display color primaries (HDR)
+        - [ ] Mastering display luminance (HDR)
+        - [ ] Maximum content light level (HDR)
+        - [ ] Maximum frame average light level (HDR)
 
-    - [X] Audio
-        - [X] ID (Stream ID)
-        - [X] Codec format
-        - [X] Codec format info
-        - [X] Codec ID
-        - [X] Duration
-        - [X] Bitrate mode
-        - [X] Bitrate
-        - [X] Channel(s)
-        - [X] Channel layout
-        - [X] Sampling rate
-        - [X] Frame rate (FPS and SPF, samples per frame)
-        - [X] Compression mode
-        - [X] Stream size
-        - [X] Title
-        - [X] Language
-        - [X] Default
-        - [X] Forced
-        - [X] Alternate group
-        - [X] Encoded date
-        - [X] Tagged date
+    - [ ] Audio
+        - [ ] ID (Stream ID)
+        - [ ] Codec format
+        - [ ] Codec format info
+        - [ ] Codec ID
+        - [ ] Duration
+        - [ ] Bitrate mode
+        - [ ] Bitrate
+        - [ ] Channel(s)
+        - [ ] Channel layout
+        - [ ] Sampling rate
+        - [ ] Frame rate (FPS and SPF, samples per frame)
+        - [ ] Compression mode
+        - [ ] Stream size
+        - [ ] Title
+        - [ ] Language
+        - [ ] Default
+        - [ ] Forced
+        - [ ] Alternate group
+        - [ ] Encoded date
+        - [ ] Tagged date
 
-    - [X] Subtitle
-        - [X] ID (Stream ID)
-        - [X] Format
-        - [X] Codec ID
-        - [X] Codec ID info
-        - [X] Duration
-        - [X] Bitrate
-        - [X] Frame rate
-        - [X] Count of elements
-        - [X] Stream size
-        - [X] Title
-        - [X] Language
-        - [X] Default
-        - [X] Forced
+    - [ ] Subtitle
+        - [ ] ID (Stream ID)
+        - [ ] Format
+        - [ ] Codec ID
+        - [ ] Codec ID info
+        - [ ] Duration
+        - [ ] Bitrate
+        - [ ] Frame rate
+        - [ ] Count of elements
+        - [ ] Stream size
+        - [ ] Title
+        - [ ] Language
+        - [ ] Default
+        - [ ] Forced
     
-    - [X] Image
-        - [X] Type
-        - [X] Format
-        - [X] Format/info
-        - [X] Format settings
-        - [X] Muxing mode
-        - [X] Width (in px)
-        - [X] Height (in px)
-        - [X] Color space
-        - [X] Chroma subsampling
-        - [X] Bit depth
-        - [X] Compression mode
-        - [X] Stream size
+    - [ ] Image
+        - [ ] Type
+        - [ ] Format
+        - [ ] Format/info
+        - [ ] Format settings
+        - [ ] Muxing mode
+        - [ ] Width (in px)
+        - [ ] Height (in px)
+        - [ ] Color space
+        - [ ] Chroma subsampling
+        - [ ] Bit depth
+        - [ ] Compression mode
+        - [ ] Stream size
 
 - [-] UI
-    - __[✓] Title bar__
-    - [X] Logo and consistent design
-    - [X] Clean interface with smooth animations
-    - [X] Drag and drop media
-    - [X] Dark and light mode
-    - [X] Hover tooltips over every field with clear documentation
-    - [X] Performant UI with zero stuttering or hiccups
+    - __[X] Title bar__
+    - [ ] Logo and consistent design
+    - [ ] Clean interface with smooth animations
+    - [ ] Drag and drop media
+    - [ ] Dark and light mode
+    - [ ] Hover tooltips over every field with clear documentation
+    - [ ] Performant UI with zero stuttering or hiccups
 
-- [X] Media player
-    - [X] Play media
-    - [X] Support a wide variety of containers and codecs
+- [ ] Media player
+    - [ ] Play media
+    - [ ] Support a wide variety of containers and codecs
 
-- [X] Stream editor
-    - [X] Ability to re-order, or delete streams, without re-encoding video
-    - [X] Add streams from one container to another
-    - [X] Embed subtitle files as subtitle streams into media container
+- [ ] Stream editor
+    - [ ] Ability to re-order, or delete streams, without re-encoding video
+    - [ ] Add streams from one container to another
+    - [ ] Embed subtitle files as subtitle streams into media container
