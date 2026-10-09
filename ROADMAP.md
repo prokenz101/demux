@@ -1,11 +1,13 @@
 ### Roadmap:
-[X] -> Done, '**[-]**' -> In progress, [ ] -> Not started
+- [X] -> Done
+- '**[-]**' -> In progress
+- [ ] -> Not started
 
-- __[X] Select and read files__
+- [X] __Select and read files__
 - [-] Display media information
     - [-] General media
-        - __[X] Name / File path__
-        - __[X] Container format name (MPEG-4, Matroska, etc.)__
+        - [X] __Name / File path__
+        - [X] __Container format name (MPEG-4, Matroska, etc.)__
         - [ ] Format profile
         - [-] Codec ID:
             - [-] Major brand
@@ -105,7 +107,7 @@
         - [ ] Stream size
 
 - [-] UI
-    - __[X] Title bar__
+    - [X] __Title bar__
     - [ ] Logo and consistent design
     - [ ] Clean interface with smooth animations
     - [ ] Drag and drop media
