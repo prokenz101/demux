@@ -3,14 +3,11 @@
 
   let file_path = $state("");
   let details = $state("");
-  let path_message = $state("");
 
   async function select_file(event: Event) {
     event.preventDefault();
     file_path = await invoke("select_file", {});
-    details =
-      "Info:\n" + (await invoke("list_details", { path: file_path }));
-    path_message = "File Path: " + file_path;
+    details = "Info:\n" + (await invoke("list_details", { path: file_path }));
   }
 </script>
 
@@ -22,7 +19,6 @@
     Select File
   </button>
 
-  <p>{path_message}</p>
   <p class="multiline">{details}</p>
 </main>
 
@@ -76,7 +72,7 @@
     color: #ffffff;
     border: 3px solid #3f3f46;
 
-    transition: all 0.075s ease-in-out
+    transition: all 0.075s ease-in-out;
   }
 
   .select-file-btn-select:hover {

@@ -1,8 +1,9 @@
-use tauri_plugin_dialog::DialogExt;
 use tauri::WebviewWindow;
+use tauri_plugin_dialog::DialogExt;
 
-mod ffmpeg;
-use ffmpeg::{get_input_context, get_general_details};
+pub mod ffmpeg;
+pub mod formats;
+use ffmpeg::{get_general_details, get_input_context};
 
 #[tauri::command]
 async fn select_file(window: WebviewWindow) -> Option<String> {
