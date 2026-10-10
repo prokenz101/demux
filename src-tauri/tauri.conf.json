@@ -14,7 +14,9 @@
       {
         "title": "demux",
         "width": 800,
-        "height": 600
+        "height": 450,
+        "minWidth": 670,
+        "minHeight": 448
       }
     ],
     "security": {
