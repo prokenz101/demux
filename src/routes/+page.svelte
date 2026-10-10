@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/core";
+  import { openUrl } from "@tauri-apps/plugin-opener";
 
   let file_path = $state("");
   let details = $state("");
@@ -8,6 +9,14 @@
     event.preventDefault();
     file_path = await invoke("select_file", {});
     details = "Info:\n" + (await invoke("list_details", { path: file_path }));
+  }
+
+  async function open_github(event: Event) {
+    try {
+      await openUrl(`https://github.com/prokenz101/demux`); //TODO: Change this to a release once a release comes out
+    } catch (err) {
+      console.error("Failed: ", err);
+    }
   }
 </script>
 
