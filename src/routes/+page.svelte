@@ -2,8 +2,8 @@
   import { invoke } from "@tauri-apps/api/core";
   import { openUrl } from "@tauri-apps/plugin-opener";
 
-  let file_path = $state("");
   let details = $state("");
+  let filePath = $state("");
   let version = "v1.0";
 
   async function select_file(event: Event) {
@@ -12,7 +12,7 @@
     details = "Info:\n" + (await invoke("list_details", { path: file_path }));
   }
 
-  async function open_github(event: Event) {
+  async function open_github() {
     try {
       await openUrl(`https://github.com/prokenz101/demux`); //TODO: Change this to a release once a release comes out
     } catch (err) {
@@ -52,12 +52,6 @@
       </div>
     </div>
   </div>
-  <!-- 
-      <button class="select-file-btn-select" onclick={select_file}>
-        Select File
-        </button>
-        
-        <p class="multiline">{details}</p> -->
 </main>
 
 <style>
@@ -68,9 +62,8 @@
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
-
     descent-override: 1%;
-    ascent-override: 79%; /* To fit the font perfectly */
+    ascent-override: 79%;
     line-gap-override: 0%;
   }
 
@@ -88,11 +81,9 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 1;
-
     color: #0f0f0f;
     background-color: #f6f6f6;
     overflow: hidden;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -100,7 +91,6 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  /* We are replacing the default 8px boundary with our own body */
   :global(body) {
     margin: 0;
     padding: 8px;
@@ -133,7 +123,6 @@
     height: fit-content;
     align-items: center;
     justify-content: space-between;
-    padding-inline: 12px;
     padding: 12px;
   }
 
@@ -158,16 +147,23 @@
     text-box-trim: both;
   }
 
+  h1,
+  p,
+  .info-button,
+  .more-btn,
+  .dashboard-row button {
+    user-select: none;
+  }
+
   .info-button {
     display: inline-flex;
     align-items: center;
     height: fit-content;
     width: fit-content;
     background-color: transparent;
-    border-color: transparent;
     cursor: pointer;
-    padding: 0px;
-    border: 0px;
+    padding: 0;
+    border: 0;
     transform: translateY(2px) translateX(-7px);
     opacity: 0.5;
     transition: all 0.075s ease;
@@ -175,7 +171,6 @@
 
   .info-button:hover {
     opacity: 0.75;
-    transition: all 0.075s ease;
   }
 
   .info-button:active {
@@ -198,7 +193,6 @@
     background-color: #222226;
     color: #ffffff;
     border: 2px solid #3f3f46;
-
     transition: all 0.075s ease;
   }
 
@@ -226,104 +220,65 @@
     gap: 10px;
   }
 
-  .dashboard-row button {
+  .play-btn,
+  .analyze-btn,
+  .edit-btn {
     flex: 1;
-  }
-
-  .play-btn {
-    font-family: 'Outfit';
+    font-family: "Outfit";
     font-size: 24px;
     color: #ffffff;
-    background-color: #6982ff;
     border-radius: 25px;
-    border: solid 3px;
-    border-color: #293365;
+    border: 4px solid;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     transition: all 0.125s ease;
   }
 
+  .play-btn.dragging,
+  .analyze-btn.dragging,
+  .edit-btn.dragging {
+    border-style: dashed;
+  }
+
+  .play-btn {
+    background-color: #6982ff;
+    border-color: #293365;
+  }
   .play-btn img {
     width: 110px;
     height: 110px;
   }
-
+  .play-btn.dragging,
   .play-btn:hover {
     background-color: #5467cc;
   }
 
   .analyze-btn {
-    font-family: 'Outfit';
-    font-size: 24px;
-    color: #ffffff;
     background-color: #25653d;
-    border-radius: 25px;
-    border: solid 3px;
     border-color: #143e24;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.125s ease;
   }
-
   .analyze-btn img {
     width: 75px;
     height: 75px;
   }
-
   .analyze-btn:hover {
     background-color: #205735;
   }
 
   .edit-btn {
-    font-family: 'Outfit';
-    font-size: 24px;
-    color: #ffffff;
     background-color: #ff2929;
-    border-radius: 25px;
-    border: solid 3px;
     border-color: #650f0f;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.125s ease;
   }
-
   .edit-btn img {
     width: 80px;
     height: 80px;
   }
-
   .edit-btn:hover {
     background-color: #cc2020;
   }
-
-  /* p.multiline {
-    white-space: pre-line;
-  }
-
-  .select-file-btn-select {
-    width: fit-content;
-    padding: 4px 12px;
-    cursor: pointer;
-    font-size: 24px;
-    border-radius: 0;
-
-    background-color: #222226;
-    color: #ffffff;
-    border: 3px solid #3f3f46;
-
-    transition: all 0.075s ease;
-  }
-
-  .select-file-btn-select:hover {
-    background-color: #333338;
-    border-color: #494951;
-  } */
 
   @media (prefers-color-scheme: dark) {
     :root {
