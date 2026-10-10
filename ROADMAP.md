@@ -112,10 +112,10 @@
     - [X] __Title bar__
     - [ ] Logo and consistent design
     - [ ] Clean interface with smooth animations
-    - [ ] Drag and drop media
+    - [X] Drag and drop media
     - [ ] Dark and light mode
     - [ ] Hover tooltips over every field with clear documentation
-    - [ ] Performant UI with zero stuttering or hiccups
+    - [X] Performant UI with zero stuttering or hiccups
 
 - [ ] Media player
     - [ ] Play media
