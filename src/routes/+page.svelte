@@ -1,15 +1,20 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/core";
   import { openUrl } from "@tauri-apps/plugin-opener";
+  import { goto } from "$app/navigation";
+  import { onMount, onDestroy } from "svelte";
+  import { getCurrentWebview } from "@tauri-apps/api/webview";
 
-  let details = $state("");
   let filePath = $state("");
   let version = "v1.0";
 
   async function select_file(event: Event) {
     event.preventDefault();
-    file_path = await invoke("select_file", {});
-    details = "Info:\n" + (await invoke("list_details", { path: file_path }));
+
+    const selected = await invoke<string | null>("select_file", {});
+    if (selected) {
+      filePath = selected;
+    }
   }
 
   async function open_github() {
@@ -19,6 +24,103 @@
       console.error("Failed: ", err);
     }
   }
+
+  async function goto_player(event: Event) {
+    await select_file(event);
+
+    if (filePath != "") {
+      goto(`/player/?path=${encodeURIComponent(filePath)}`);
+    }
+  }
+
+  async function goto_analysis(event: Event) {
+    await select_file(event);
+
+    if (filePath != "") {
+      goto(`/analysis/?path=${encodeURIComponent(filePath)}`);
+    }
+  }
+
+  async function goto_editor(event: Event) {
+    await select_file(event);
+
+    if (filePath != "") {
+      goto(`/editor/?path=${encodeURIComponent(filePath)}`);
+    }
+  }
+
+  type ActionType = "play" | "analyze" | "edit";
+
+  // References to the 3 buttons
+  let buttons = $state<{ [key in ActionType]?: HTMLButtonElement }>({});
+
+  // Tracks which action is currently hovered by a dragged file
+  let hoveredAction = $state<ActionType | null>(null);
+  let unlisten: (() => void) | undefined;
+
+  // Finds which button (if any) is under the cursor
+  function getActionAtPoint(
+    physicalX: number,
+    physicalY: number,
+  ): ActionType | null {
+    const scale = window.devicePixelRatio || 1;
+    const clientX = physicalX / scale;
+    const clientY = physicalY / scale;
+
+    const hit = document.elementFromPoint(clientX, clientY);
+    if (!hit) return null;
+
+    for (const [action, el] of Object.entries(buttons)) {
+      if (el && el.contains(hit)) {
+        return action as ActionType;
+      }
+    }
+    return null;
+  }
+
+  // Unified routing handler for both clicks and drops
+  function handleAction(action: ActionType, path: string) {
+    switch (action) {
+      case "play":
+        goto(`/player?path=${encodeURIComponent(path)}`);
+        break;
+      case "analyze":
+        goto(`/analysis?path=${encodeURIComponent(path)}`);
+        break;
+      case "edit":
+        goto(`/editor?path=${encodeURIComponent(path)}`);
+        break;
+    }
+  }
+
+  onMount(async () => {
+    unlisten = await getCurrentWebview().onDragDropEvent((event) => {
+      const payload = event.payload;
+
+      if (payload.type === "over") {
+        hoveredAction = getActionAtPoint(
+          payload.position.x,
+          payload.position.y,
+        );
+      } else if (payload.type === "leave") {
+        hoveredAction = null;
+      } else if (payload.type === "drop") {
+        const targetAction = getActionAtPoint(
+          payload.position.x,
+          payload.position.y,
+        );
+        const paths = payload.paths;
+
+        if (targetAction && paths && paths.length > 0) {
+          handleAction(targetAction, paths[0]);
+        }
+      }
+    });
+  });
+
+  onDestroy(() => {
+    unlisten?.();
+  });
 </script>
 
 <main class="container" lang="ts">
@@ -36,18 +138,45 @@
       </button>
     </div>
     <div class="dashboard-row">
-      <button class="play-btn">
-        <img src="/assets/icons/play_arrow.svg" alt="Play">
-        <span>Play video</span>
+      <button
+        class="play-btn"
+        onclick={goto_player}
+        bind:this={buttons.play}
+        class:dragging={hoveredAction === "play"}
+      >
+        <img src="/assets/icons/play_arrow.svg" alt="Play" />
+        <span
+          >{hoveredAction === "play"
+            ? "Drop to play media"
+            : "Play media"}</span
+        >
       </button>
       <div class="dashboard-grid">
-        <button class="analyze-btn">
-          <img src="/assets/icons/analyze.svg" alt="Analyze">
-          <span>Analyze video</span>
+        <button
+          class="analyze-btn"
+          onclick={goto_analysis}
+          bind:this={buttons.analyze}
+          class:dragging={hoveredAction === "analyze"}
+        >
+          <img src="/assets/icons/analyze.svg" alt="Analyze" />
+          <span
+            >{hoveredAction === "analyze"
+              ? "Drop to analyze media"
+              : "Analyze media"}</span
+          >
         </button>
-        <button class="edit-btn">
-          <img src="/assets/icons/edit.svg" alt="Edit">
-          <span>Edit video</span>
+        <button
+          class="edit-btn"
+          onclick={goto_editor}
+          bind:this={buttons.edit}
+          class:dragging={hoveredAction === "edit"}
+        >
+          <img src="/assets/icons/edit.svg" alt="Edit" />
+          <span
+            >{hoveredAction === "edit"
+              ? "Drop to edit media"
+              : "Edit media"}</span
+          >
         </button>
       </div>
     </div>
@@ -264,6 +393,7 @@
     width: 75px;
     height: 75px;
   }
+  .analyze-btn.dragging,
   .analyze-btn:hover {
     background-color: #205735;
   }
@@ -276,6 +406,7 @@
     width: 80px;
     height: 80px;
   }
+  .edit-btn.dragging,
   .edit-btn:hover {
     background-color: #cc2020;
   }
