@@ -1,7 +1,9 @@
-### Roadmap:
+# demux Roadmap:
 - [X] -> Done
 - '**[-]**' -> In progress
 - [ ] -> Not started
+
+## Full to-do list:
 
 - [X] __Select and read files__
 - [-] Display media information
