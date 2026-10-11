@@ -274,6 +274,7 @@
     line-height: normal;
     padding: 0;
     text-box-trim: both;
+    transform: translateY(1px)
   }
 
   h1,
