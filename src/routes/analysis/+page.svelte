@@ -65,7 +65,6 @@
 
         color: #ffffff;
         background-color: #f6f6f6;
-        overflow: hidden;
 
         font-synthesis: none;
         text-rendering: optimizeLegibility;
@@ -87,10 +86,9 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        justify-content: left;
-        text-align: left;
         height: 100%;
         box-sizing: border-box;
+        overflow: hidden;
     }
 
     .title-row {
@@ -99,6 +97,7 @@
         align-items: center;
         gap: 12px;
         padding: 10px;
+        flex-shrink: 0;
     }
 
     .title-row h1 {
@@ -130,9 +129,12 @@
         user-select: none;
     }
 
-    p {
+    .container > p {
+        flex: 1;
+        min-height: 0;
         font-family: "Roboto";
-        white-space: pre-line;
+        overflow-y: auto;
+        white-space: pre-wrap;
         padding: 10px;
         margin: 0;
     }

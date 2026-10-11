@@ -20,6 +20,21 @@ fn list_details(path: String) -> Result<String, String> {
     // let ictx = get_input_context(&path).expect("Failed to get input context");
     // Ok(get_general_details(&ictx, &path))
     let mi = mediainfo::MediaInfo::new();
+    mi.set_option("Inform", "JSON");
+    mi.set_option("Complete", "1");
+    mi.open(path)?;
+
+    // let format = mi.get(mediainfo::StreamKind::General, 0, "Format");
+    // let codec = mi.get(mediainfo::StreamKind::Video, 0, "Format");
+    // Ok(format!("Format: {}\nCodec: {}", format, codec))
+    let json_raw = mi.inform();
+
+    let json: serde_json::Value = serde_json::from_str(&json_raw)
+        .map_err(|error| format!("Failed to parse MediaInfo JSON: {error}"))?;
+    let pretty_json = serde_json::to_string_pretty(&json)
+        .map_err(|error| format!("Failed to pretty-print MediaInfo JSON: {error}"))?;
+
+    Ok(pretty_json)
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
