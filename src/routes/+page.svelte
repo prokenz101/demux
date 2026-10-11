@@ -226,7 +226,7 @@
     box-sizing: border-box;
     height: 100vh;
     overflow: hidden;
-    background-color: #000000;
+    background-color: #141414;
   }
 
   .container {
@@ -415,7 +415,7 @@
   @media (prefers-color-scheme: dark) {
     :root {
       color: #f6f6f6;
-      background-color: #000000;
+      background-color: #141414;
     }
   }
 </style>

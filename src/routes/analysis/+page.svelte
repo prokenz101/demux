@@ -78,8 +78,8 @@
         padding: 8px;
         box-sizing: border-box;
         height: 100vh;
+        background-color: #141414;
         overflow: hidden;
-        background-color: #000000;
     }
 
     .container {
