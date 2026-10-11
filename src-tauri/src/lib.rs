@@ -1,9 +1,9 @@
 use tauri::WebviewWindow;
 use tauri_plugin_dialog::DialogExt;
 
-pub mod ffmpeg;
 pub mod containers;
-use ffmpeg::{get_general_details, get_input_context};
+pub mod ffmpeg;
+pub mod mediainfo;
 
 #[tauri::command]
 async fn select_file(window: WebviewWindow) -> Option<String> {
@@ -17,8 +17,9 @@ async fn select_file(window: WebviewWindow) -> Option<String> {
 
 #[tauri::command]
 fn list_details(path: String) -> Result<String, String> {
-    let ictx = get_input_context(&path).expect("Failed to get input context");
-    Ok(get_general_details(&ictx, &path))
+    // let ictx = get_input_context(&path).expect("Failed to get input context");
+    // Ok(get_general_details(&ictx, &path))
+    let mi = mediainfo::MediaInfo::new();
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
