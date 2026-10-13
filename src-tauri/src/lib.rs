@@ -1,8 +1,8 @@
 use tauri::WebviewWindow;
 use tauri_plugin_dialog::DialogExt;
 
-pub mod containers;
-pub mod ffmpeg;
+// pub mod containers;
+// pub mod ffmpeg;
 pub mod mediainfo;
 
 #[tauri::command]
