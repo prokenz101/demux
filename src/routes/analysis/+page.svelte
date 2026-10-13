@@ -163,4 +163,26 @@
         background-color: #222226;
         border: 2px solid #3f3f46;
     }
+    .jsonnodeview::-webkit-scrollbar {
+        width: 16px;
+    }
+
+    .jsonnodeview::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .jsonnodeview::-webkit-scrollbar-thumb {
+        background-color: #ffffff;
+        border-radius: 10px;
+
+        border: 4px solid transparent;
+        border-right-width: 6px;
+
+        /* This makes the hitbox hug the right side of the screen for easy scrolling */
+        background-clip: padding-box;
+    }
+
+    .jsonnodeview::-webkit-scrollbar-thumb:hover {
+        background-color: #cccccc;
+    }
 </style>

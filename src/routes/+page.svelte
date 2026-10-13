@@ -222,7 +222,7 @@
 
   :global(body) {
     margin: 0;
-    padding: 8px;
+    padding: 8px 0px 8px 8px;
     box-sizing: border-box;
     height: 100vh;
     overflow: hidden;
@@ -245,6 +245,7 @@
     flex: 1;
     min-height: 0;
     gap: 5px;
+    padding-right: 8px;
   }
 
   .title-row {
