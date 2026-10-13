@@ -125,7 +125,7 @@
 
 <main class="container" lang="ts">
   <div class="title-button-sep">
-    <div class="titlerow">
+    <div class="title-row">
       <div class="demux-by">
         <h1>demux</h1>
         <p>by kenz | {version}</p>
@@ -247,7 +247,7 @@
     gap: 5px;
   }
 
-  .titlerow {
+  .title-row {
     display: flex;
     height: fit-content;
     align-items: center;
