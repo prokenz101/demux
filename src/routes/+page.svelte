@@ -50,15 +50,10 @@
   }
 
   type ActionType = "play" | "analyze" | "edit";
-
-  // References to the 3 buttons
   let buttons = $state<{ [key in ActionType]?: HTMLButtonElement }>({});
-
-  // Tracks which action is currently hovered by a dragged file
   let hoveredAction = $state<ActionType | null>(null);
   let unlisten: (() => void) | undefined;
 
-  // Finds which button (if any) is under the cursor
   function getActionAtPoint(
     physicalX: number,
     physicalY: number,
@@ -78,7 +73,6 @@
     return null;
   }
 
-  // Unified routing handler for both clicks and drops
   function handleAction(action: ActionType, path: string) {
     switch (action) {
       case "play":
@@ -275,7 +269,7 @@
     line-height: normal;
     padding: 0;
     text-box-trim: both;
-    transform: translateY(1px)
+    transform: translateY(1px);
   }
 
   h1,
