@@ -255,6 +255,7 @@
 
     .more-btn {
         display: inline-flex;
+        user-select: none;
         height: 40px;
         width: 40px;
         align-items: center;
