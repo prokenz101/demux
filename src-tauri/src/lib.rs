@@ -21,6 +21,7 @@ fn list_details(path: String) -> Result<String, String> {
     // Ok(get_general_details(&ictx, &path))
     let mi = mediainfo::MediaInfo::new();
     mi.set_option("Inform", "JSON");
+    mi.set_option("ParseSpeed", "0");
     mi.set_option("Complete", "1");
     mi.open(path)?;
 
