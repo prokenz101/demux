@@ -6,18 +6,23 @@
         buildJSONTree,
         formatJsonTree,
         getAllBranchIDs,
+        createTreeCopy,
         type TreeNode,
     } from "./media-parser";
-    import JSONNodeView from "./JsonNodes.svelte";
+    import JSONNodeView from "./Tree.svelte";
 
     let path = $derived(page.url.searchParams.get("path") ?? "");
 
+    let rawTree: TreeNode | null = null;
+    let formattedTree: TreeNode | null = null;
     let tree = $state<TreeNode | null>(null);
+
     let openIds = $state<Set<string>>(new Set());
     let loading = $state(false);
     let errorMessage = $state("");
+    let viewRaw = $state(false);
 
-    var allBranchIDs: string[];
+    let allBranchIDs: string[];
 
     async function loadAnalysis(filePath: string) {
         loading = true;
@@ -28,11 +33,14 @@
             });
             const parsed = JSON.parse(rawJsonString);
             const targetData = parsed.media ?? parsed;
-            tree = buildJSONTree(targetData, "media");
-            formatJsonTree(tree);
+            rawTree = buildJsonTree(targetData, "media", "root");
+            formattedTree = formatJsonTree(createTreeCopy(rawTree));
+            tree = formattedTree;
 
-            allBranchIDs = getAllBranchIDs(tree);
-            openIds = new Set<string>(allBranchIDs);
+            if (rawTree) {
+                allBranchIDs = getAllBranchIDs(rawTree);
+                openIds = new Set<string>(allBranchIDs);
+            }
         } catch (err) {
             console.error("Failed to load details:", err);
             errorMessage = String(err);
@@ -62,6 +70,11 @@
         openIds = new Set();
     }
 
+    function handleViewRaw() {
+        viewRaw = !viewRaw;
+        tree = viewRaw ? rawTree : formattedTree;
+    }
+
     function back() {
         goto("/");
     }
@@ -86,7 +99,21 @@
             </div>
         </div>
         <div class="control-row">
-            <button class="more-btn" data-tooltip="Expand all" onclick={expandAll} aria-label="Expand all">
+            <button
+                class="view-raw-btn"
+                class:raw-active={viewRaw}
+                data-tooltip="View raw"
+                onclick={handleViewRaw}
+                aria-label="View raw"
+            >
+                <img src="/assets/icons/view_raw.svg" alt="View raw" />
+            </button>
+            <button
+                class="more-btn"
+                data-tooltip="Expand all"
+                onclick={expandAll}
+                aria-label="Expand all"
+            >
                 <img src="/assets/icons/expand.svg" alt="Expand" />
             </button>
             <button class="more-btn" data-tooltip="Collapse all" onclick={collapseAll} aria-label="Collapse all">
@@ -104,6 +131,7 @@
     {:else if tree}
         <div class="jsonnodeview">
             <JSONNodeView node={tree} {openIds} onToggle={handleToggle} />
+                {viewRaw}
         </div>
     {/if}
 </main>
@@ -276,6 +304,37 @@
     .more-btn:active {
         background-color: #222226;
         border: 2px solid #3f3f46;
+    }
+
+    .view-raw-btn {
+        display: inline-flex;
+        height: 40px;
+        width: 40px;
+        align-items: center;
+        user-select: none;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        background-color: #222226;
+        color: #ffffff;
+        border: 2px solid #3f3f46;
+        transition: all 0.075s ease;
+    }
+
+    .view-raw-btn:hover {
+        background-color: #333338;
+        border-color: #494951;
+    }
+
+    .view-raw-btn:active {
+        background-color: #222226;
+        border: 2px solid #3f3f46;
+    }
+
+    .view-raw-btn.raw-active,
+    .view-raw-btn.raw-active:hover,
+    .view-raw-btn.raw-active:active {
+        border-color: #9ffffd;
     }
 
     .jsonnodeview {
