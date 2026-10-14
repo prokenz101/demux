@@ -1,14 +1,16 @@
+import { getMediaFieldConfig, mediaFieldMap } from "./media-format";
 
 export interface Base {
     id: string;
     label: string;
+    show?: boolean;
 }
 
 export interface Branch extends Base {
     type: 'branch';
     isArray: boolean;
     childCount: number;
-    children: TreeNode[];
+    children: (TreeNode | null)[];
 }
 
 export interface Leaf extends Base {
@@ -18,15 +20,11 @@ export interface Leaf extends Base {
 
 export type TreeNode = Leaf | Branch;
 
-export function buildJSONTree(data: unknown, label = 'media', path = 'root'): TreeNode {
 export function buildJsonTree(data: unknown, label = 'media', path = 'root'): TreeNode | null {
     if (data === null || typeof (data) !== 'object') {
-        // label = label.replaceAll("_", " ");
-        // label = label.replaceAll(/\B([A-Z])/g, ` $1`);
-
         return {
             id: path,
-            label,
+            label: label,
             type: 'leaf',
             value: String(data)
         }
@@ -39,7 +37,11 @@ export function buildJsonTree(data: unknown, label = 'media', path = 'root'): Tr
 
     //* Making a unique ID for any specific element
     //* Because there are so many of the same keys across different fields in MediaInfo's JSON
-    const children = entries.map(([key, value], id) => buildJSONTree(value, key, `${path}.${id}_${key}`));
+    const children = entries.map(([key, value], id) => buildJsonTree(value, key, `${path}.${id}_${key}`));
+
+    if (children.length === 0 && path !== "root") {
+        return null;
+    }
 
     return {
         id: path,
@@ -83,6 +85,7 @@ export function getAllBranchIDs(node: TreeNode | null): string[] {
         if (node.type === 'leaf') return [];
 
         const childBranchIds = node.children.flatMap(getAllBranchIDs);
+        return [node.id, ...childBranchIds];
     }
     return [];
 }

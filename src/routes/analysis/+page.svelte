@@ -3,7 +3,7 @@
     import { page } from "$app/state";
     import { goto } from "$app/navigation";
     import {
-        buildJSONTree,
+        buildJsonTree,
         formatJsonTree,
         getAllBranchIDs,
         createTreeCopy,
@@ -116,7 +116,12 @@
             >
                 <img src="/assets/icons/expand.svg" alt="Expand" />
             </button>
-            <button class="more-btn" data-tooltip="Collapse all" onclick={collapseAll} aria-label="Collapse all">
+            <button
+                class="more-btn"
+                data-tooltip="Collapse all"
+                onclick={collapseAll}
+                aria-label="Collapse all"
+            >
                 <img src="/assets/icons/collapse.svg" alt="Collapse" />
             </button>
             <button class="more-btn" aria-label="More...">
@@ -130,8 +135,12 @@
         <p>Error: {errorMessage}</p>
     {:else if tree}
         <div class="jsonnodeview">
-            <JSONNodeView node={tree} {openIds} onToggle={handleToggle} />
+            <JSONNodeView
+                node={tree}
+                {openIds}
+                onToggle={handleToggle}
                 {viewRaw}
+            />
         </div>
     {/if}
 </main>
@@ -193,7 +202,6 @@
     .title-button-sep {
         display: flex;
         flex-direction: row;
-        /* flex: 1; */
         justify-content: space-between;
         height: fit-content;
         gap: 5px;
@@ -254,7 +262,6 @@
         padding: 10px;
         margin: 0;
     }
-
     .back-btn {
         display: inline-flex;
         user-select: none;
