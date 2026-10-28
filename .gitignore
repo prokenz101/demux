@@ -12,3 +12,4 @@ src-tauri/.cargo/config.toml
 src-tauri/lib/*.dll
 src-tauri/lib/*.lib
 src-tauri/lib/.gitkeep
+/.vscode
