@@ -5,31 +5,23 @@
     export let node: TreeNode;
     export let openIds: Set<string>;
     export let onToggle: (id: string) => void;
-    export let viewRaw: boolean;
 
     $: isOpen = openIds.has(node.id);
 </script>
 
 <div class="container">
     {#if node.type === "leaf"}
-        {#if !viewRaw}
-            <div class="leaf-div">
-                <button class="key" onclick={() => console.log(node.id)}>
-                    {node.label}:
-                </button>
-                <button
-                    class="value"
-                    onclick={() => navigator.clipboard.writeText(node.value)}
-                    >{node.value}
-                </button>
-                <!--TODO: Add reactive feedback when hitting copy on a value -->
-            </div>
-        {:else}
-            <p class="leaf-raw">
-                <span class="key-raw">"{node.label}": </span>
-                <span class="value-raw">"{node.value}"</span>
-            </p>
-        {/if}
+        <div class="leaf-div">
+            <button class="key" onclick={() => console.log(node.id)}>
+                {node.label}:
+            </button>
+            <button
+                class="value"
+                onclick={() => navigator.clipboard.writeText(node.value)}
+                >{node.value}
+            </button>
+            <!--TODO: Add reactive feedback when hitting copy on a value -->
+        </div>
     {:else}
         <div class="branch">
             <div class="branch-header">
@@ -68,13 +60,6 @@
                 </button>
                 <div class="label-badge">
                     <strong class="label">{node.label}</strong>
-                    {#if viewRaw}
-                        <span class="badge">
-                            {node.isArray
-                                ? `[${node.childCount}]`
-                                : `(${node.childCount})`}
-                        </span>
-                    {/if}
                 </div>
             </div>
 
@@ -86,7 +71,6 @@
                             node={child}
                             {openIds}
                             {onToggle}
-                            {viewRaw}
                         />
                     {/each}
                 </div>
@@ -134,18 +118,6 @@
         border-radius: 5px;
         text-align: left;
         word-break: break-all;
-    }
-    .leaf-raw {
-        margin: 0px 21px;
-        font-family: "Consolas";
-    }
-    .key-raw {
-        color: #f0f0f0;
-        font-weight: 600;
-    }
-    .value-raw {
-        color: #9ffffd;
-        font-weight: 100;
     }
     .branch {
         margin: 2px 0;

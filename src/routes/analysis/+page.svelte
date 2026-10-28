@@ -6,15 +6,13 @@
         buildJsonTree,
         formatJsonTree,
         getAllBranchIDs,
-        createTreeCopy,
         type TreeNode,
     } from "./media-parser";
     import JSONNodeView from "./Tree.svelte";
 
     let path = $derived(page.url.searchParams.get("path") ?? "");
+    let rawJson: string = $state("");
 
-    let rawTree: TreeNode | null = null;
-    let formattedTree: TreeNode | null = null;
     let tree = $state<TreeNode | null>(null);
 
     let openIds = $state<Set<string>>(new Set());
@@ -33,12 +31,12 @@
             });
             const parsed = JSON.parse(rawJsonString);
             const targetData = parsed.media ?? parsed;
-            rawTree = buildJsonTree(targetData, "media", "root");
-            formattedTree = formatJsonTree(createTreeCopy(rawTree));
-            tree = formattedTree;
+            tree = formatJsonTree(buildJsonTree(targetData, "media", "root"));
 
-            if (rawTree) {
-                allBranchIDs = getAllBranchIDs(rawTree);
+            rawJson = rawJsonString;
+
+            if (tree) {
+                allBranchIDs = getAllBranchIDs(tree);
                 openIds = new Set<string>(allBranchIDs);
             }
         } catch (err) {
@@ -70,11 +68,6 @@
         openIds = new Set();
     }
 
-    function handleViewRaw() {
-        viewRaw = !viewRaw;
-        tree = viewRaw ? rawTree : formattedTree;
-    }
-
     function back() {
         goto("/");
     }
@@ -103,7 +96,7 @@
                 class="view-raw-btn"
                 class:raw-active={viewRaw}
                 data-tooltip="View raw"
-                onclick={handleViewRaw}
+                onclick={() => (viewRaw = !viewRaw)}
                 aria-label="View raw"
             >
                 <img src="/assets/icons/view_raw.svg" alt="View raw" />
@@ -134,14 +127,15 @@
     {:else if errorMessage}
         <p>Error: {errorMessage}</p>
     {:else if tree}
-        <div class="jsonnodeview">
-            <JSONNodeView
-                node={tree}
-                {openIds}
-                onToggle={handleToggle}
-                {viewRaw}
-            />
-        </div>
+        {#if viewRaw}
+            <div class="jsonnodeview">
+                <p>{rawJson}</p>
+            </div>
+        {:else}
+            <div class="jsonnodeview">
+                <JSONNodeView node={tree} {openIds} onToggle={handleToggle} />
+            </div>
+        {/if}
     {/if}
 </main>
 
@@ -233,6 +227,7 @@
         align-items: last baseline;
         margin: 0;
         gap: 5px;
+        user-select: none;
     }
 
     .demux-title {
@@ -349,6 +344,12 @@
         overflow-y: auto;
         margin-top: 12px;
         padding-right: 8px;
+    }
+
+    .jsonnodeview p {
+        white-space: pre-wrap;
+        margin-top: 6px;
+        font-family: "Consolas";
     }
 
     .jsonnodeview::-webkit-scrollbar {
