@@ -17,17 +17,12 @@ async fn select_file(window: WebviewWindow) -> Option<String> {
 
 #[tauri::command]
 fn list_details(path: String) -> Result<String, String> {
-    // let ictx = get_input_context(&path).expect("Failed to get input context");
-    // Ok(get_general_details(&ictx, &path))
     let mi = mediainfo::MediaInfo::new();
     mi.set_option("Inform", "JSON");
     mi.set_option("ParseSpeed", "0");
     mi.set_option("Complete", "1");
     mi.open(path)?;
 
-    // let format = mi.get(mediainfo::StreamKind::General, 0, "Format");
-    // let codec = mi.get(mediainfo::StreamKind::Video, 0, "Format");
-    // Ok(format!("Format: {}\nCodec: {}", format, codec))
     let json_raw = mi.inform();
 
     let json: serde_json::Value = serde_json::from_str(&json_raw)
