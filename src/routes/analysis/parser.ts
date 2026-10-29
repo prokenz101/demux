@@ -1,4 +1,4 @@
-import { getMediaFieldConfig, mediaFieldMap } from "./media-format";
+import { getMediaFieldConfig } from "./media";
 
 export interface Base {
     id: string;
@@ -20,9 +20,11 @@ export interface Leaf extends Base {
 
 export type TreeNode = Leaf | Branch;
 
+
 export function buildJsonTree(data: unknown, label = 'media', path = 'root'): TreeNode | null {
+
     if (data === null || typeof (data) !== 'object') {
-        return {
+        const leaf: Leaf = {
             id: path,
             label: label,
             type: 'leaf',
@@ -90,15 +92,3 @@ export function getAllBranchIDs(node: TreeNode | null): string[] {
     return [];
 }
 
-export function createTreeCopy(node: TreeNode | null): TreeNode | null {
-    if (node === null) return null;
-
-    if (node.type === 'leaf') {
-        return { ...node };
-    }
-
-    return {
-        ...node,
-        children: node.children.map(createTreeCopy)
-    };
-}
