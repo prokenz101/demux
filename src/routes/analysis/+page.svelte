@@ -127,16 +127,18 @@
     {:else if errorMessage}
         <p>Error: {errorMessage}</p>
     {:else if tree}
-        {#if viewRaw}
-            <div class="jsonnodeview">
-                <p>{rawJson}</p>
-            </div>
-        {:else}
-            <div class="jsonnodeview">
-                <JSONNodeView node={tree} {openIds} onToggle={handleToggle} />
             </div>
         {/if}
     {/if}
+                <div class="jsonnodeview" class:hidden={viewRaw}>
+                    <JSONNodeView
+                        node={tree}
+                        {openIds}
+                        onToggle={handleToggle}
+                    />
+                </div>
+                <div class="jsonnodeview" class:hidden={!viewRaw}>
+                    <p>{rawJson}</p>
 </main>
 
 <style>
@@ -191,6 +193,10 @@
         height: 100%;
         box-sizing: border-box;
         overflow: hidden;
+    }
+
+    .hidden {
+        display: none !important;
     }
 
     .title-button-sep {
