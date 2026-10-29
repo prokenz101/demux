@@ -101,22 +101,36 @@
             >
                 <img src="/assets/icons/view_raw.svg" alt="View raw" />
             </button>
-            <button
-                class="more-btn"
-                data-tooltip="Expand all"
-                onclick={expandAll}
-                aria-label="Expand all"
+            <span
+                class="tooltip-wrapper"
+                data-tooltip={viewRaw
+                    ? "Unavailable in raw view"
+                    : "Expand all"}
             >
-                <img src="/assets/icons/expand.svg" alt="Expand" />
-            </button>
-            <button
-                class="more-btn"
-                data-tooltip="Collapse all"
-                onclick={collapseAll}
-                aria-label="Collapse all"
+                <button
+                    class="more-btn-no-raw"
+                    onclick={expandAll}
+                    aria-label="Expand all"
+                    disabled={viewRaw}
+                >
+                    <img src="/assets/icons/expand.svg" alt="Expand" />
+                </button>
+            </span>
+            <span
+                class="tooltip-wrapper"
+                data-tooltip={viewRaw
+                    ? "Unavailable in raw view"
+                    : "Collapse all"}
             >
-                <img src="/assets/icons/collapse.svg" alt="Collapse" />
-            </button>
+                <button
+                    class="more-btn-no-raw"
+                    onclick={collapseAll}
+                    aria-label="Collapse all"
+                    disabled={viewRaw}
+                >
+                    <img src="/assets/icons/collapse.svg" alt="Collapse" />
+                </button>
+            </span>
             <button class="more-btn" aria-label="More...">
                 <img src="/assets/icons/more_vert.svg" alt="More" />
             </button>
@@ -314,6 +328,39 @@
         border: 2px solid #3f3f46;
     }
 
+    .more-btn-no-raw {
+        display: inline-flex;
+        user-select: none;
+        height: 40px;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        background-color: #222226;
+        color: #ffffff;
+        border: 2px solid #3f3f46;
+        transition:
+            hover,
+            active 0.075s ease,
+            opacity 0.15s ease;
+    }
+
+    .more-btn-no-raw:not(:disabled):hover {
+        background-color: #333338;
+        border-color: #494951;
+    }
+
+    .more-btn-no-raw:not(:disabled):active {
+        background-color: #222226;
+        border: 2px solid #3f3f46;
+    }
+
+    .more-btn-no-raw:disabled {
+        cursor: not-allowed;
+        opacity: 0.3;
+    }
+
     .view-raw-btn {
         display: inline-flex;
         height: 40px;
@@ -381,6 +428,15 @@
         background-color: #cccccc;
     }
 
+    .tooltip-wrapper {
+        display: inline-flex;
+        position: relative;
+    }
+
+    .tooltip-wrapper:has(button:disabled) {
+        cursor: not-allowed;
+    }
+
     /* Styling button tooltip */
     [data-tooltip] {
         position: relative;
@@ -397,6 +453,7 @@
         color: #ededed;
         font-size: 0.75rem;
         font-weight: 500;
+        font-family: Arial, sans-serif;
         letter-spacing: 0.01em;
         white-space: nowrap;
         padding: 5px 9px;
