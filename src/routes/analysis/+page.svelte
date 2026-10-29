@@ -8,6 +8,7 @@
         getAllBranchIDs,
         type TreeNode,
     } from "./media-parser";
+    } from "./parser";
     import JSONNodeView from "./Tree.svelte";
 
     let path = $derived(page.url.searchParams.get("path") ?? "");

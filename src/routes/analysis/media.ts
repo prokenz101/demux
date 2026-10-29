@@ -1,9 +1,10 @@
-import type { Leaf } from "./media-parser";
+import type { Leaf } from "./parser";
 
 export interface LeafFormat {
     displayName?: string;
-    documentation?: string;
 }
+
+
 
 function formatKey(key: string): string {
     return key
@@ -29,8 +30,6 @@ export const mediaFieldMap = new Map<string, LeafFormat>([
         "@ref",
         {
             displayName: "File Path",
-            documentation: "<h1>File Path</h1>",
-        }
     ],
     [
         "@type",
