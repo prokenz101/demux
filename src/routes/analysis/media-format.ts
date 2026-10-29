@@ -1,4 +1,4 @@
-import type { Leaf, TreeNode } from "./media-parser";
+import type { Leaf } from "./media-parser";
 
 export interface LeafFormat {
     displayName?: string;
