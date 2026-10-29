@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { TreeNode } from "./media-parser";
-    import {} from "./+page.svelte";
+    import type { TreeNode } from "./parser";
+    import { setSideBarAction } from "./sharedSidebar.svelte";
 
     export let node: TreeNode;
     export let openIds: Set<string>;
@@ -12,7 +12,13 @@
 <div class="container">
     {#if node.type === "leaf"}
         <div class="leaf-div">
-            <button class="key" onclick={() => console.log(node.id)}>
+            <button
+                class="key"
+                onclick={() => {
+                    console.log(node.id);
+                    setSideBarAction.setSideBar(node.id);
+                }}
+            >
                 {node.label}:
             </button>
             <button
@@ -67,11 +73,7 @@
             {#if isOpen}
                 <div class="branch-content">
                     {#each node.children.filter((child): child is TreeNode => child !== null && child !== undefined) as child (child.id)}
-                        <svelte:self
-                            node={child}
-                            {openIds}
-                            {onToggle}
-                        />
+                        <svelte:self node={child} {openIds} {onToggle} />
                     {/each}
                 </div>
             {/if}

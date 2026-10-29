@@ -20,8 +20,12 @@ export interface Leaf extends Base {
 
 export type TreeNode = Leaf | Branch;
 
+export const leafNodesMap = new Map<string, Leaf>();
 
 export function buildJsonTree(data: unknown, label = 'media', path = 'root'): TreeNode | null {
+    if (path === 'root') {
+        leafNodesMap.clear();
+    }
 
     if (data === null || typeof (data) !== 'object') {
         const leaf: Leaf = {
@@ -30,6 +34,8 @@ export function buildJsonTree(data: unknown, label = 'media', path = 'root'): Tr
             type: 'leaf',
             value: String(data)
         }
+        leafNodesMap.set(path, { ...leaf });
+        return leaf;
     } //* Breaking out of the recursion here for simple values
 
     const isArray = Array.isArray(data);
@@ -92,3 +98,15 @@ export function getAllBranchIDs(node: TreeNode | null): string[] {
     return [];
 }
 
+// export function createTreeCopy(node: TreeNode | null): TreeNode | null {
+//     if (node === null) return null;
+
+//     if (node.type === 'leaf') {
+//         return { ...node };
+//     }
+
+//     return {
+//         ...node,
+//         children: node.children.map(createTreeCopy)
+//     };
+// }

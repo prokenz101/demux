@@ -6,10 +6,12 @@
         buildJsonTree,
         formatJsonTree,
         getAllBranchIDs,
+        leafNodesMap,
         type TreeNode,
-    } from "./media-parser";
     } from "./parser";
     import JSONNodeView from "./Tree.svelte";
+    import { setSideBarAction } from "./sharedSidebar.svelte";
+    import { mediaFieldMap, type DocumentationRenderer } from "./media";
 
     let path = $derived(page.url.searchParams.get("path") ?? "");
     let rawJson: string = $state("");
@@ -39,6 +41,8 @@
             if (tree) {
                 allBranchIDs = getAllBranchIDs(tree);
                 openIds = new Set<string>(allBranchIDs);
+
+                setSidebarField("root.0_@ref");
             }
         } catch (err) {
             console.error("Failed to load details:", err);
@@ -71,6 +75,45 @@
 
     function back() {
         goto("/");
+    }
+
+    let activeKey = $state("");
+    let activeValue = $state("");
+
+    let documentationEntry = $derived(mediaFieldMap.get(activeKey));
+    let documentation = $derived(documentationEntry?.documentation);
+
+    //* If it's HTML
+    let renderedHtml = $derived.by(() => {
+        if (
+            typeof documentation === "function" &&
+            !isSvelteComponent(documentation)
+        ) {
+            return (documentation as DocumentationRenderer)({
+                value: activeValue,
+                fieldKey: activeKey,
+            });
+        }
+        return null;
+    });
+
+    setSideBarAction.setSideBar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
+
+    function isSvelteComponent(target: any): boolean {
+        return (
+            typeof target === "function" &&
+            target.prototype &&
+            "$set" in target.prototype
+        );
+    }
+
+    export function setSidebarField(fieldId: string) {
+        let leaf = leafNodesMap.get(fieldId);
+
+        if (leaf) {
+            activeKey = leaf.label;
+            activeValue = leaf.value;
+        }
     }
 
     $effect(() => {
@@ -160,14 +203,16 @@
         <!-- TODO: Make a proper sidebar -->
         <!-- TODO: Fix scrollbar problems when minimizing window to lowest size -->
         <!-- {#if sidebarOpen} -->
-            <aside class="sidebar-panel">
-                <div class="sidebar-header">
-                    <p>SIDEBAR PLACEHOLDER</p>
-                </div>
-                <div class="sidebar-body">
-                    <p>SIDEBAR PLACEHOLDER TEXT</p>
-                </div>
-            </aside>
+        <aside class="sidebar-panel">
+            <div class="sidebar-header">
+                <h2>{documentationEntry?.displayName ?? activeKey}</h2>
+            </div>
+            <div class="sidebar-body">
+                {#if renderedHtml}
+                    {@html renderedHtml}
+                {/if}
+            </div>
+        </aside>
         <!-- {/if} -->
     </div>
 </main>
@@ -323,7 +368,7 @@
         background-color: #141414;
     }
 
-    .sidebar-body {
+    .sidebar-body :global {
         flex: 1;
         overflow-y: auto;
         padding: 16px;
