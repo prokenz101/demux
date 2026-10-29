@@ -136,14 +136,13 @@
             </button>
         </div>
     </div>
-    {#if loading}
-        <p>Loading media tree...</p>
-    {:else if errorMessage}
-        <p>Error: {errorMessage}</p>
-    {:else if tree}
-            </div>
-        {/if}
-    {/if}
+    <div class="content-split">
+        <section class="main-viewport">
+            {#if loading}
+                <p>Loading media tree...</p>
+            {:else if errorMessage}
+                <p>Error: {errorMessage}</p>
+            {:else if tree}
                 <div class="jsonnodeview" class:hidden={viewRaw}>
                     <JSONNodeView
                         node={tree}
@@ -153,6 +152,23 @@
                 </div>
                 <div class="jsonnodeview" class:hidden={!viewRaw}>
                     <p>{rawJson}</p>
+                </div>
+            {/if}
+        </section>
+
+        <!-- TODO: Make a proper sidebar -->
+        <!-- TODO: Fix scrollbar problems when minimizing window to lowest size -->
+        <!-- {#if sidebarOpen} -->
+            <aside class="sidebar-panel">
+                <div class="sidebar-header">
+                    <p>SIDEBAR PLACEHOLDER</p>
+                </div>
+                <div class="sidebar-body">
+                    <p>SIDEBAR PLACEHOLDER TEXT</p>
+                </div>
+            </aside>
+        <!-- {/if} -->
+    </div>
 </main>
 
 <style>
@@ -235,7 +251,7 @@
         height: fit-content;
         padding-right: 18px;
         padding-top: 10px;
-        gap: 8px;
+        gap: 10px;
     }
 
     .title-row h1 {
@@ -268,15 +284,50 @@
         user-select: none;
     }
 
-    .container > p {
+    .content-split {
+        display: flex;
+        flex-direction: row;
         flex: 1;
         min-height: 0;
-        font-family: "Roboto";
-        overflow-y: auto;
-        white-space: pre-wrap;
-        padding: 10px;
-        margin: 0;
+        width: 100%;
+        overflow: hidden;
     }
+
+    .main-viewport {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        padding-left: 10px;
+    }
+
+    .sidebar-panel {
+        width: 35%;
+        min-width: 280px;
+        max-width: 500px;
+        height: 100%;
+        background-color: #141414;
+        border-left: 2px solid #27272a;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .sidebar-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #27272a;
+        background-color: #141414;
+    }
+
+    .sidebar-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+    }
+
     .back-btn {
         display: inline-flex;
         user-select: none;
