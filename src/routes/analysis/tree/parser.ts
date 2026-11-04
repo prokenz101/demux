@@ -1,4 +1,4 @@
-import { getMediaFieldConfig } from "./media";
+import { getMediaFieldConfig } from "../media";
 
 export interface Base {
     id: string;

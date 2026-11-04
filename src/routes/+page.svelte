@@ -117,7 +117,7 @@
   });
 </script>
 
-<main class="container" lang="ts">
+<main class="main-container" lang="ts">
   <div class="title-button-sep">
     <div class="title-row">
       <div class="demux-by">
@@ -223,7 +223,7 @@
     background-color: #141414;
   }
 
-  .container {
+  .main-container {
     margin: 0;
     display: flex;
     flex-direction: column;
