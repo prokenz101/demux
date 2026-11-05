@@ -7,5 +7,5 @@
 
 <div>
     <p class="description">{description}</p>
-    <p class="sidebar-field-value">{value}</p>
+    <p class="sidebar-field-value">{value ?? ""}</p>
 </div>

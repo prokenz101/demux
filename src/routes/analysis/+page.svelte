@@ -7,7 +7,7 @@
         buildJsonTree,
         formatJsonTree,
         getAllBranchIDs,
-        leafNodesMap,
+        nodesMap,
         type TreeNode,
     } from "./tree/parser";
     import JSONNodeView from "./tree/Tree.svelte";
@@ -50,9 +50,7 @@
 
                 setSidebarField("root.0_@ref");
                 activeKey = "root.0_@ref";
-                documentationEntry = getMediaFieldConfig(
-                    leafNodesMap.get("root.0_@ref")!,
-                );
+                documentationEntry = getMediaFieldConfigForField("root.0_@ref");
                 if (documentationEntry.documentation)
                     Documentation = documentationEntry?.documentation;
             }
@@ -94,9 +92,7 @@
     let activeValue = $state("");
 
     let documentationEntry: LeafFormat = $derived(
-        activeKey !== ""
-            ? getMediaFieldConfig(leafNodesMap.get(activeFieldId)!)
-            : {},
+        activeKey !== "" ? getMediaFieldConfigForField(activeFieldId) : {},
     );
     let Documentation: Component<DocumentationProps> = $derived(
         documentationEntry.documentation!,
@@ -104,21 +100,18 @@
 
     setSideBarAction.setSideBar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
 
-    function isSvelteComponent(target: any): boolean {
-        return (
-            typeof target === "function" &&
-            target.prototype &&
-            "$set" in target.prototype
-        );
+    function getMediaFieldConfigForField(fieldId: string): LeafFormat {
+        const node = nodesMap.get(fieldId);
+        return node ? getMediaFieldConfig(node) : {};
     }
 
     export function setSidebarField(fieldId: string) {
-        let leaf = leafNodesMap.get(fieldId);
+        const node = nodesMap.get(fieldId);
 
-        if (leaf) {
+        if (node) {
             activeFieldId = fieldId;
-            activeKey = leaf.label;
-            activeValue = leaf.value;
+            activeKey = node.label;
+            activeValue = node.type === "leaf" ? node.value : "";
         }
     }
 

@@ -65,7 +65,11 @@
                     {/if}
                 </button>
                 <div class="label-badge">
-                    <strong class="label">{node.label}</strong>
+                    <button
+                        class="label"
+                        onclick={() => setSideBarAction.setSideBar(node.id)}
+                        >{node.label}</button
+                    >
                 </div>
             </div>
 

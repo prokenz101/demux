@@ -5,6 +5,14 @@ export const mediaFieldMap = new Map<string, LeafFormat>([
     //TODO: Change all the documentations to be much more in depth, with more examples
     ["", {}], //* Initial value, will never be seen
     [
+        "media",
+        {
+            displayName: "Media display name",
+            description: "Media description",
+            documentation: DefaultSidebar
+        }
+    ],
+    [
         "@ref",
         {
             displayName: "File Path",

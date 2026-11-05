@@ -20,11 +20,11 @@ export interface Leaf extends Base {
 
 export type TreeNode = Leaf | Branch;
 
-export const leafNodesMap = new Map<string, Leaf>();
+export const nodesMap = new Map<string, TreeNode>();
 
 export function buildJsonTree(data: unknown, label = 'media', path = 'root'): TreeNode | null {
     if (path === 'root') {
-        leafNodesMap.clear();
+        nodesMap.clear();
     }
 
     if (data === null || typeof (data) !== 'object') {
@@ -34,7 +34,7 @@ export function buildJsonTree(data: unknown, label = 'media', path = 'root'): Tr
             type: 'leaf',
             value: String(data)
         }
-        leafNodesMap.set(path, { ...leaf });
+        nodesMap.set(path, leaf);
         return leaf;
     } //* Breaking out of the recursion here for simple values
 
@@ -51,7 +51,7 @@ export function buildJsonTree(data: unknown, label = 'media', path = 'root'): Tr
         return null;
     }
 
-    return {
+    const branch: Branch = {
         id: path,
         label,
         type: 'branch',
@@ -59,6 +59,8 @@ export function buildJsonTree(data: unknown, label = 'media', path = 'root'): Tr
         childCount: children.length,
         children
     }
+    nodesMap.set(path, branch);
+    return branch;
 }
 
 export function formatJsonTree(tree: TreeNode | null): TreeNode | null {

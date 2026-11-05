@@ -4,6 +4,7 @@
     flex-direction: row;
     align-items: flex-start;
 }
+
 .key {
     font-family: "Consolas";
     background-color: transparent;
@@ -20,9 +21,11 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
+
 .key:hover {
     background: #3c3c3c;
 }
+
 .value {
     display: inline;
     color: #9ffffd;
@@ -37,15 +40,18 @@
     text-align: left;
     overflow-wrap: break-word;
 }
+
 .branch {
     margin: 2px 0px;
 }
+
 .branch-header {
     display: flex;
     flex-direction: row;
     height: fit-content;
     align-items: center;
 }
+
 .collapse-expand-arrow {
     background: transparent;
     border: none;
@@ -60,18 +66,36 @@
     color: #ffffff;
     transition: all 0.075s ease;
 }
+
 .label-badge {
     display: flex;
     gap: 3px;
     align-items: center;
 }
+
 .label {
     border-radius: 5px;
-    margin: 2px;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: transparent;
+    color: #ffffff;
+    padding: 0.5px 3px 0.5px 3px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.075s ease;
+    text-align: left;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
+.label:hover {
+    background: #3c3c3c;
+}
+
 .collapse-expand-arrow:hover {
     background: #3c3c3c;
 }
+
 .branch-content {
     margin: 1px 21px;
     border-left: 1px dashed #cccccc62;

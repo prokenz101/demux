@@ -1,5 +1,5 @@
 import { mediaFieldMap } from "./sidebar/map";
-import type { Leaf } from "./tree/parser";
+import type { TreeNode } from "./tree/parser";
 import type { Component } from "svelte";
 import DefaultSidebar from "./sidebar/DefaultSidebar.svelte";
 
@@ -22,7 +22,7 @@ function formatKey(key: string): string {
         .trim();
 }
 
-export function getMediaFieldConfig(child: Leaf): LeafFormat {
+export function getMediaFieldConfig(child: TreeNode): LeafFormat {
     let config = mediaFieldMap.get(child.label);
 
     if (!config) { //* This is when config is not defined, i.e., default case
