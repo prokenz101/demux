@@ -1,5 +1,5 @@
 <script lang="ts">
-    import './Tree.css';
+    import "./Tree.css";
     import type { TreeNode } from "./parser";
     import { setSideBarAction } from "../sidebar/sharedSidebar.svelte";
 

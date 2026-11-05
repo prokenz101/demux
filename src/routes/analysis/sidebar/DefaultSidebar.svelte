@@ -1,5 +1,5 @@
 <script lang="ts">
-    import './DefaultSidebar.css';
+    import "./DefaultSidebar.css";
     import type { DocumentationProps } from "../media";
 
     let { value, description }: DocumentationProps = $props();
