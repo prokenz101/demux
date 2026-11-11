@@ -148,14 +148,25 @@
     background-color: #141414;
 }
 
-.sidebar-title {
-    margin: 0px 0px 0px 0px;
+.sidebar-header p {
+    margin: 0px 0px 2px 0px;
+    color: #999999;
+    font-size: 13px;
+    font-weight: 700;
 }
 
-.sidebar-body :global {
+.sidebar-title {
+    margin: 0px 0px 0px 0px;
+    font-size: 30px;
+}
+
+.sidebar-body {
+    display: flex;
     flex: 1;
-    overflow-y: hidden;
-    padding: 16px;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 15px;
 }
 
 .back-btn {
@@ -281,12 +292,6 @@
     margin-top: 12px;
     margin-bottom: 9px;
     padding-right: 8px;
-}
-
-.jsonnodeview p {
-    white-space: pre-wrap;
-    margin-top: 6px;
-    font-family: "Consolas";
 }
 
 .jsonnodeview::-webkit-scrollbar,

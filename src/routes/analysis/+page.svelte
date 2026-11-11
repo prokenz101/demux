@@ -11,11 +11,14 @@
         type TreeNode,
     } from "./tree/parser";
     import JSONNodeView from "./tree/Tree.svelte";
-    import { setSideBarAction } from "./sidebar/sharedSidebar.svelte";
+    import {
+        setSideBarAction,
+        openAction,
+    } from "./sidebar/sharedSidebar.svelte";
     import {
         getMediaFieldConfig,
         type DocumentationProps,
-        type LeafFormat,
+        type SidebarFormat,
     } from "./media";
     import type { Component } from "svelte";
 
@@ -40,7 +43,7 @@
             });
             const parsed = JSON.parse(rawJsonString);
             const targetData = parsed.media ?? parsed;
-            tree = formatJsonTree(buildJsonTree(targetData, "media", "root"));
+            tree = formatJsonTree(buildJsonTree(targetData, "media", ["root"]));
 
             rawJson = rawJsonString;
 
@@ -48,9 +51,9 @@
                 allBranchIDs = getAllBranchIDs(tree);
                 openIds = new Set<string>(allBranchIDs);
 
-                setSidebarField("root.0_@ref");
-                activeKey = "root.0_@ref";
-                documentationEntry = getMediaFieldConfigForField("root.0_@ref");
+                setSidebarField("root.0.@ref");
+                activeKey = "root.0.@ref";
+                documentationEntry = getMediaFieldConfigForField("root.0.@ref");
                 if (documentationEntry.documentation)
                     Documentation = documentationEntry?.documentation;
             }
@@ -90,17 +93,16 @@
     let activeKey = $state("");
     let activeFieldId = $state("");
     let activeValue = $state("");
+    let activeDisplayPath = $state([""]);
 
-    let documentationEntry: LeafFormat = $derived(
+    let documentationEntry: SidebarFormat = $derived(
         activeKey !== "" ? getMediaFieldConfigForField(activeFieldId) : {},
     );
     let Documentation: Component<DocumentationProps> = $derived(
         documentationEntry.documentation!,
     );
 
-    setSideBarAction.setSideBar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
-
-    function getMediaFieldConfigForField(fieldId: string): LeafFormat {
+    function getMediaFieldConfigForField(fieldId: string): SidebarFormat {
         const node = nodesMap.get(fieldId);
         return node ? getMediaFieldConfig(node) : {};
     }
@@ -112,8 +114,21 @@
             activeFieldId = fieldId;
             activeKey = node.label;
             activeValue = node.type === "leaf" ? node.value : "";
+            activeDisplayPath = node.displayPath;
         }
     }
+
+    export async function openFile() {
+        await invoke<string>("open_file", { path });
+    }
+
+    export async function openFileLocation() {
+        await invoke<string>("open_enclosing_folder", { path });
+    }
+
+    setSideBarAction.setSideBar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
+    openAction.openFile = openFile;
+    openAction.openFileLocation = openFileLocation;
 
     $effect(() => {
         if (path) {
@@ -203,17 +218,23 @@
         <!-- {#if sidebarOpen} -->
         <aside class="sidebar-panel">
             <div class="sidebar-header">
-                <h2 class="sidebar-title">
+                <p>
+                    {activeKey != "" &&
+                    activeDisplayPath.slice(0, -1).length >= 1
+                        ? activeDisplayPath.slice(0, -1).join(" / ") + " / "
+                        : ""}
+                </p>
+                <h1 class="sidebar-title">
                     {documentationEntry?.displayName ?? activeKey}
-                </h2>
+                </h1>
             </div>
             <div class="sidebar-body">
                 {#if Documentation as Component<DocumentationProps>}
                     <Documentation
-                        description={documentationEntry?.description ??
-                            "No description available."}
+                        description={documentationEntry?.description ?? ""}
                         value={activeValue}
                         fieldKey={activeFieldId}
+                        actions={documentationEntry?.actions ?? []}
                     ></Documentation>
                 {/if}
             </div>

@@ -1,7 +1,8 @@
-import type { LeafFormat } from "../media";
-import DefaultSidebar from "./DefaultSidebar.svelte";
+import type { SidebarFormat } from "../media";
+import { openAction } from "./sharedSidebar.svelte";
 
-export const mediaFieldMap = new Map<string, LeafFormat>([
+
+export const mediaFieldMap = new Map<string, SidebarFormat>([
     //TODO: Change all the documentations to be much more in depth, with more examples
     ["", {}], //* Initial value, will never be seen
     [
@@ -9,21 +10,27 @@ export const mediaFieldMap = new Map<string, LeafFormat>([
         {
             displayName: "Media display name",
             description: "Media description",
-            documentation: DefaultSidebar
         }
     ],
     [
         "@ref",
         {
             displayName: "File Path",
-            description: "The absolute file path of the file. This is just some example text so we can see how far the text moves.",
-            documentation: DefaultSidebar
-            // documentation: ({ value }: DocumentationProps) => `
-            //     <div class="documentation">
-            //         <p>The absolute file path of the source container.</p>
-            //         <p>${value}</p>
-            //         <button>Open file</button>
-            //     </div>`
+            description: "File Path refers to the absolute file path of the file. It is the complete address of the file in a computer system, starting from the root directory and including all directories leading to the file.",
+            actions: [
+                {
+                    iconPath: "/assets/icons/open_file.svg",
+                    altText: "Open file",
+                    label: "Open file",
+                    onClick: () => { openAction.openFile(); }
+                },
+                {
+                    iconPath: "/assets/icons/open_folder.svg",
+                    altText: "Open file location",
+                    label: "Open file location",
+                    onClick: () => { openAction.openFileLocation(); }
+                }
+            ]
         }
     ],
     [
@@ -31,7 +38,6 @@ export const mediaFieldMap = new Map<string, LeafFormat>([
         {
             displayName: "Stream Type",
             description: "The kind of stream.",
-            documentation: DefaultSidebar
         }
     ],
     [
@@ -39,7 +45,6 @@ export const mediaFieldMap = new Map<string, LeafFormat>([
         {
             displayName: "Audio Stream Count",
             description: "The total number of audio streams.",
-            documentation: DefaultSidebar
         }
     ],
     [
@@ -47,8 +52,13 @@ export const mediaFieldMap = new Map<string, LeafFormat>([
         {
             displayName: "Total Audio Channels",
             description: "The something",
-            documentation: DefaultSidebar //TODO: Fix that documentation
         }
     ],
+    [
+        "Audio_Codec_List",
+        {
+            description: "The even more something",
+        }
+    ]
     //TODO: Add more
 ]);

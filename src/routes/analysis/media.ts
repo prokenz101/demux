@@ -3,16 +3,25 @@ import type { TreeNode } from "./tree/parser";
 import type { Component } from "svelte";
 import DefaultSidebar from "./sidebar/DefaultSidebar.svelte";
 
-export interface LeafFormat {
+export interface SidebarFormat {
     displayName?: string;
     description?: string;
     documentation?: Component<DocumentationProps>;
+    actions?: SidebarActionButton[];
+}
+
+export interface SidebarActionButton {
+    iconPath: string;
+    altText: string;
+    label: string;
+    onClick: () => void;
 }
 
 export interface DocumentationProps {
     description?: string;
     value?: string;
     fieldKey?: string;
+    actions?: SidebarActionButton[];
 }
 
 function formatKey(key: string): string {
@@ -22,15 +31,13 @@ function formatKey(key: string): string {
         .trim();
 }
 
-export function getMediaFieldConfig(child: TreeNode): LeafFormat {
-    let config = mediaFieldMap.get(child.label);
+export function getMediaFieldConfig(child: TreeNode): SidebarFormat {
+    const config = mediaFieldMap.get(child.label);
 
-    if (!config) { //* This is when config is not defined, i.e., default case
-        config = {
-            displayName: formatKey(child.label),
-            documentation: DefaultSidebar,
-        }
-    }
-
-    return config;
+    return {
+        displayName: config?.displayName || formatKey(child.displayName),
+        documentation: config?.documentation || DefaultSidebar,
+        description: config?.description || "No description available.",
+        actions: config?.actions || []
+    };
 }

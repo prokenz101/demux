@@ -1,3 +1,8 @@
 export const setSideBarAction = $state({
-    setSideBar: (fieldId: string) => { },
+    setSideBar: (fieldId: string) => { }
 });
+
+export const openAction = $state({
+    openFile: () => { },
+    openFileLocation: () => {},
+})

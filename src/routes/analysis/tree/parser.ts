@@ -3,7 +3,8 @@ import { getMediaFieldConfig } from "../media";
 export interface Base {
     id: string;
     label: string;
-    show?: boolean;
+    displayName: string;
+    displayPath: string[];
 }
 
 export interface Branch extends Base {
@@ -22,19 +23,26 @@ export type TreeNode = Leaf | Branch;
 
 export const nodesMap = new Map<string, TreeNode>();
 
-export function buildJsonTree(data: unknown, label = 'media', path = 'root'): TreeNode | null {
-    if (path === 'root') {
+export function buildJsonTree(data: unknown, label = "media", path = ["root"]): TreeNode | null {
+    const arraysEqual = <T,>(a: T[], b: T[]): boolean => {
+        if (a.length !== b.length) return false;
+        return a.every((val, index) => val === b[index]);
+    };
+
+    if (arraysEqual(path, ["root"])) {
         nodesMap.clear();
     }
 
-    if (data === null || typeof (data) !== 'object') {
+    if (data === null || typeof (data) !== "object") {
         const leaf: Leaf = {
-            id: path,
+            id: path.join("."),
             label: label,
-            type: 'leaf',
+            displayName: label,
+            displayPath: [],
+            type: "leaf",
             value: String(data)
         }
-        nodesMap.set(path, leaf);
+        nodesMap.set(path.join("."), leaf);
         return leaf;
     } //* Breaking out of the recursion here for simple values
 
@@ -45,70 +53,82 @@ export function buildJsonTree(data: unknown, label = 'media', path = 'root'): Tr
 
     //* Making a unique ID for any specific element
     //* Because there are so many of the same keys across different fields in MediaInfo's JSON
-    const children = entries.map(([key, value], id) => buildJsonTree(value, key, `${path}.${id}_${key}`));
+    const children = entries.map(([key, value], id) => buildJsonTree(value, key, [...path, id.toString(), key]));
 
-    if (children.length === 0 && path !== "root") {
+    if (children.length === 0 && !arraysEqual(path, ["root"])) {
         return null;
     }
 
     const branch: Branch = {
-        id: path,
+        id: path.join("."),
         label,
-        type: 'branch',
+        displayName: label,
+        displayPath: [],
+        type: "branch",
         isArray,
         childCount: children.length,
         children
     }
-    nodesMap.set(path, branch);
+    nodesMap.set(path.join("."), branch);
     return branch;
 }
 
 export function formatJsonTree(tree: TreeNode | null): TreeNode | null {
-    if (tree) {
-        if (tree.type == "branch") {
-            //* Changing from array ID to the stream's type value
-            for (const treenode of tree.children) {
-                if (treenode && (treenode.type == "leaf" && treenode.label == "@type")) {
-                    tree.label = treenode.value + " " + tree.label;
-                }
+    const formatNode = (node: TreeNode, parentPath: string[], siblings: (TreeNode | null)[] = []): void => {
+        if (node.type === "leaf") {
+            const config = getMediaFieldConfig(node);
+            node.displayName = config.displayName ?? node.label;
+            node.displayPath = [...parentPath, node.displayName];
+            return;
+        }
 
-                if (treenode && treenode.type == "leaf") {
-                    const child = tree.children.find(child => child?.id === treenode.id);
-                    if (child && child.type === "leaf") {
-                        const config = getMediaFieldConfig(child);
-                        child.label = config.displayName!;
-                    }
-                } else {
-                    formatJsonTree(treenode);
-                }
+        node.displayName = node.label;
+        let streamType: string | undefined;
+        let language: string | undefined;
+        for (const child of node.children) {
+            if (child?.type === "leaf" && child.label === "@type") {
+                streamType = child.value;
+            }
+            if (child?.type === "leaf" && child.label === "Language_String3") {
+                language = child.value;
             }
         }
 
-        return tree;
+        node.displayName = streamType ?? node.label;
+        const duplicateStreamType = streamType && siblings.some(sibling =>
+            sibling !== node && sibling?.type === "branch" && sibling.children.some(
+                child => child?.type === "leaf" && child.label === "@type" && child.value === streamType
+            )
+        );
+        if (duplicateStreamType) {
+            node.displayName = `${streamType} ${node.label}`;
+        }
+
+        if (language && (streamType === "Text" || streamType === "Audio")) {
+            node.displayName = `${streamType} (${language})${duplicateStreamType ? ` ${node.label}` : ""}`;
+        }
+
+        node.displayPath = [...parentPath, node.displayName];
+        for (const child of node.children) {
+            if (child) {
+                formatNode(child, node.displayPath, node.children);
+            }
+        }
+    };
+
+    if (tree) {
+        formatNode(tree, []);
     }
 
-    return null;
+    return tree;
 }
 
 export function getAllBranchIDs(node: TreeNode | null): string[] {
     if (node) {
-        if (node.type === 'leaf') return [];
+        if (node.type === "leaf") return [];
 
         const childBranchIds = node.children.flatMap(getAllBranchIDs);
         return [node.id, ...childBranchIds];
     }
     return [];
 }
-
-// export function createTreeCopy(node: TreeNode | null): TreeNode | null {
-//     if (node === null) return null;
-
-//     if (node.type === 'leaf') {
-//         return { ...node };
-//     }
-
-//     return {
-//         ...node,
-//         children: node.children.map(createTreeCopy)
-//     };
-// }

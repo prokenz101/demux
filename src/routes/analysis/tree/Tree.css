@@ -2,7 +2,7 @@
     gap: 0px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: first baseline;
 }
 
 .key {
@@ -34,8 +34,8 @@
     background-color: transparent;
     border: none;
     font-size: 16px;
-    cursor: pointer;
     padding: 0.5px 3px 0.5px 3px;
+    margin: 0px 0px 0px 0px;
     border-radius: 5px;
     text-align: left;
     overflow-wrap: break-word;

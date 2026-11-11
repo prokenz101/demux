@@ -1,3 +1,4 @@
+use std::path::Path;
 use tauri::WebviewWindow;
 use tauri_plugin_dialog::DialogExt;
 
@@ -13,6 +14,17 @@ async fn select_file(window: WebviewWindow) -> Option<String> {
         .set_parent(&window)
         .blocking_pick_file()
         .map(|path| path.to_string())
+}
+
+#[tauri::command]
+fn open_file(path: String) -> Result<(), String> {
+    open::that(&path).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn open_enclosing_folder(path: String) -> Result<(), String> {
+    tauri_plugin_opener::reveal_item_in_dir(Path::new(&path))
+        .map_err(|e| e.to_string())
 }
 
 #[tauri::command]
@@ -38,7 +50,12 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![select_file, list_details])
+        .invoke_handler(tauri::generate_handler![
+            select_file,
+            list_details,
+            open_file,
+            open_enclosing_folder
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
