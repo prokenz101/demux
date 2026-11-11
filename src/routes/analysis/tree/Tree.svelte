@@ -17,13 +17,9 @@
                 class="key"
                 onclick={() => setSideBarAction.setSideBar(node.id)}
             >
-                {node.label}:
+                {node.displayName}:
             </button>
-            <button
-                class="value"
-                onclick={() => navigator.clipboard.writeText(node.value)}
-                >{node.value}
-            </button>
+            <p class="value">{node.value}</p>
             <!--TODO: Add reactive feedback when hitting copy on a value -->
         </div>
     {:else}
