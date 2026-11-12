@@ -81,6 +81,8 @@
 
     .description-p {
         margin: 0px 0px 3px 0px;
+        line-height: 1.15;
+        white-space: pre-wrap;
     }
 
     .value-header-copy-div {
