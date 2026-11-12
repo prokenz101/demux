@@ -1,5 +1,6 @@
 export const setSideBarAction = $state({
-    setSideBar: (fieldId: string) => { }
+    setSidebar: (fieldId: string) => { },
+    openSideBar: () => { }
 });
 
 export const openAction = $state({

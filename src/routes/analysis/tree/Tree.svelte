@@ -15,7 +15,11 @@
         <div class="leaf-div">
             <button
                 class="key"
-                onclick={() => setSideBarAction.setSideBar(node.id)}
+                onclick={() => {
+                    console.log(node.label);
+                    setSideBarAction.setSidebar(node.id);
+                    setSideBarAction.openSideBar();
+                }}
             >
                 {node.displayName}:
             </button>
@@ -61,8 +65,10 @@
                 <div class="label-badge">
                     <button
                         class="label"
-                        onclick={() => setSideBarAction.setSideBar(node.id)}
-                        >{node.displayName}</button
+                        onclick={() => {
+                            setSideBarAction.setSidebar(node.id);
+                            setSideBarAction.openSideBar();
+                        }}>{node.displayName}</button
                     >
                 </div>
             </div>

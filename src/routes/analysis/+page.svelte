@@ -26,6 +26,8 @@
     let rawJson: string = $state("");
 
     let tree = $state<TreeNode | null>(null);
+    let sidebarOpen = $state(true);
+    let viewRawWasSideBarOpen = $state(true);
 
     let openIds = $state<Set<string>>(new Set());
     let loading = $state(false);
@@ -118,6 +120,10 @@
         }
     }
 
+    export function openSidebar() {
+        sidebarOpen = true;
+    }
+
     export async function openFile() {
         await invoke<string>("open_file", { path });
     }
@@ -126,7 +132,8 @@
         await invoke<string>("open_enclosing_folder", { path });
     }
 
-    setSideBarAction.setSideBar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
+    setSideBarAction.setSidebar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
+    setSideBarAction.openSideBar = openSidebar;
     openAction.openFile = openFile;
     openAction.openFileLocation = openFileLocation;
 
@@ -150,11 +157,38 @@
             </div>
         </div>
         <div class="control-row">
+            <span
+                class="tooltip-wrapper"
+                data-tooltip={viewRaw
+                    ? "Unavailable in raw view"
+                    : "Toggle sidebar"}
+            >
+                <button
+                    class="more-btn-no-raw"
+                    onclick={() => {
+                        if (!viewRaw) {
+                            sidebarOpen = !sidebarOpen;
+                        }
+                    }}
+                    aria-label="Toggle sidebar"
+                    disabled={viewRaw}
+                >
+                    <img src="/assets/icons/sidebar.svg" alt="Collapse" />
+                </button>
+            </span>
             <button
                 class="view-raw-btn"
                 class:raw-active={viewRaw}
                 data-tooltip="View raw"
-                onclick={() => (viewRaw = !viewRaw)}
+                onclick={() => {
+                    viewRaw = !viewRaw;
+                    if (viewRaw) {
+                        viewRawWasSideBarOpen = sidebarOpen;
+                        sidebarOpen = false;
+                    } else {
+                        sidebarOpen = viewRawWasSideBarOpen;
+                    }
+                }}
                 aria-label="View raw"
             >
                 <img src="/assets/icons/view_raw.svg" alt="View raw" />
@@ -215,8 +249,11 @@
         </section>
 
         <!-- TODO: Make a proper sidebar -->
-        <!-- {#if sidebarOpen} -->
-        <aside class="sidebar-panel">
+        <aside
+            class="sidebar-panel"
+            class:closed={!sidebarOpen}
+            inert={!sidebarOpen}
+        >
             <div class="sidebar-header">
                 <p>
                     {activeKey != "" &&
@@ -239,6 +276,5 @@
                 {/if}
             </div>
         </aside>
-        <!-- {/if} -->
     </div>
 </main>

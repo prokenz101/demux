@@ -27,7 +27,7 @@
 }
 
 .value {
-    display: inline;
+    display: flex;
     color: #9ffffd;
     font-weight: 100;
     font-family: "Consolas";
@@ -38,11 +38,12 @@
     margin: 0px 0px 0px 0px;
     border-radius: 5px;
     text-align: left;
-    overflow-wrap: break-word;
+    /* overflow-wrap: break-word; */
 }
 
 .branch {
     margin: 2px 0px;
+    width: fit-content;
 }
 
 .branch-header {
