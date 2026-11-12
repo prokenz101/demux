@@ -36,8 +36,8 @@ export function buildJsonTree(data: unknown, label = "media", path = ["root"]): 
     if (data === null || typeof (data) !== "object") {
         const leaf: Leaf = {
             id: path.join("."),
-            label: label,
-            displayName: label,
+            label: label.replaceAll("/", "_"),
+            displayName: label.replaceAll("/", "_"),
             displayPath: [],
             type: "leaf",
             value: String(data)
