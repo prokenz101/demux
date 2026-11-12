@@ -5,10 +5,12 @@
 </script>
 
 <div class="sidebar-container">
-    <div class="sidebar-container-div">
-        <p class="sidebar-container-div-header">Description</p>
-        <p class="description-p">{description}</p>
-    </div>
+    {#if description != ""}
+        <div class="sidebar-container-div">
+            <p class="sidebar-container-div-header">Description</p>
+            <p class="description-p">{description}</p>
+        </div>
+    {/if}
 
     {#if value}
         <div class="sidebar-value-container-div">

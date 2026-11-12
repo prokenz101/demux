@@ -37,7 +37,7 @@ export function getMediaFieldConfig(child: TreeNode): SidebarFormat {
     return {
         displayName: config?.displayName || formatKey(child.displayName),
         documentation: config?.documentation || DefaultSidebar,
-        description: config?.description || "No description available.",
+        description: config?.description,
         actions: config?.actions || []
     };
 }
