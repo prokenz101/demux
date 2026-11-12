@@ -5,5 +5,5 @@ export const setSideBarAction = $state({
 
 export const openAction = $state({
     openFile: () => { },
-    openFileLocation: () => {},
+    openFileLocation: () => { },
 })

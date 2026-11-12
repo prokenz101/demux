@@ -129,7 +129,6 @@
     .value-p {
         margin: 0px 15px 3px 0px;
         font-family: "Consolas";
-        /* color: #bdfff4; */
         color: #9ffffd;
         word-break: break-all;
     }

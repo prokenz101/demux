@@ -8,6 +8,7 @@ export interface SidebarFormat {
     description?: string;
     documentation?: Component<DocumentationProps>;
     actions?: SidebarActionButton[];
+    //TODO: Add "Insights"
 }
 
 export interface SidebarActionButton {
