@@ -24,7 +24,6 @@
                 {node.displayName}:
             </button>
             <p class="value">{node.value}</p>
-            <!--TODO: Add reactive feedback when hitting copy on a value -->
         </div>
     {:else}
         <div class="branch">
