@@ -191,6 +191,18 @@
     }
 
     @font-face {
+        font-family: "Bitter";
+        src: url("/assets/fonts/Bitter-Italic-VariableFont_wght.ttf")
+            format("truetype-variations");
+        font-weight: 100 900;
+        font-style: italic;
+        font-display: swap;
+        descent-override: 1%;
+        ascent-override: 79%;
+        line-gap-override: 0%;
+    }
+
+    @font-face {
         font-family: "Outfit";
         src: url("/assets/fonts/Outfit-VariableFont_wght.ttf")
             format("truetype-variations");

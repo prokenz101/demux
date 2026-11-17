@@ -1,4 +1,4 @@
-export const setSideBarAction = $state({
+export const setSidebarAction = $state({
     setSidebar: (fieldId: string) => { },
     openSideBar: () => { }
 });

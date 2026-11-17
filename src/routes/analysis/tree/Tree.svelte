@@ -1,7 +1,7 @@
 <script lang="ts">
     import "./Tree.css";
     import type { TreeNode } from "./parser";
-    import { setSideBarAction } from "../sidebar/sharedSidebar.svelte";
+    import { setSidebarAction } from "../sidebar/sharedSidebar.svelte";
 
     export let node: TreeNode;
     export let openIds: Set<string>;
@@ -16,9 +16,9 @@
             <button
                 class="key"
                 onclick={() => {
-                    console.log(node.label);
-                    setSideBarAction.setSidebar(node.id);
-                    setSideBarAction.openSideBar();
+                    console.log("NodeID:", node.id);
+                    setSidebarAction.setSidebar(node.id);
+                    setSidebarAction.openSideBar();
                 }}
             >
                 {node.displayName}:
@@ -66,8 +66,8 @@
                     <button
                         class="label"
                         onclick={() => {
-                            setSideBarAction.setSidebar(node.id);
-                            setSideBarAction.openSideBar();
+                            setSidebarAction.setSidebar(node.id);
+                            setSidebarAction.openSideBar();
                         }}>{node.displayName}</button
                     >
                 </div>

@@ -53,26 +53,29 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Album_ReplayGain_Gain",
         {
-            description: "Indicates the gain adjustment (in dB) needed to normalize the perceived loudness of the entire album to the ReplayGain reference level of 89 dB SPL (Sound Pressure Level), while preserving relative volume differences between its tracks.\n\nReplayGain is an audio normalization standard that prevents having to manually adjust volume when playing tracks or albums mastered at different loudness levels."
+            displayName: "Album ReplayGain Gain",
+            description: "Indicates the gain adjustment (in dB) needed to normalize the perceived loudness of the entire album to the ReplayGain reference level of 89 dB SPL (Sound Pressure Level), while preserving relative volume differences between its tracks.\n\n**ReplayGain** is an audio normalization standard that prevents having to manually adjust volume when playing tracks or albums mastered at different loudness levels."
         }
     ],
     [
         "Album_ReplayGain_Gain_String",
         {
-            description: "Indicates the gain adjustment (in dB) needed to normalize the perceived loudness of the entire album to the ReplayGain reference level of 89 dB SPL (Sound Pressure Level), while preserving relative volume differences between its tracks.\n\nReplayGain is an audio normalization standard that prevents having to manually adjust volume when playing tracks or albums mastered at different loudness levels.\n\nFormatted as a human-readable string."
+            displayName: "Album ReplayGain Gain String",
+            description: "Indicates the gain adjustment (in dB) needed to normalize the perceived loudness of the entire album to the ReplayGain reference level of 89 dB SPL (Sound Pressure Level), while preserving relative volume differences between its tracks.\n\n**ReplayGain** is an audio normalization standard that prevents having to manually adjust volume when playing tracks or albums mastered at different loudness levels.\n\nFormatted as a human-readable string."
         }
     ],
     [
         "Album_ReplayGain_Peak",
         {
-            description: "Indicates the maximum sample amplitude across all tracks in the album, represented on a normalized scale where 1.0 corresponds to digital full scale (0 dBFS).\n\nMedia players use this peak value alongside \"Album ReplayGain Gain\" to prevent audio clipping when applying positive gain adjustments during playback."
+            displayName: "Album ReplayGain Peak",
+            description: "Indicates the maximum sample amplitude across all tracks in the album, represented on a normalized scale where 1.0 corresponds to digital full scale (0 dBFS).\n\nMedia players use this peak value alongside [Album ReplayGain Gain](#field:Album_ReplayGain_Gain) to prevent audio clipping when applying positive gain adjustments during playback."
         }
     ],
     [
         "AudioCount",
         {
             displayName: "Audio Stream Count",
-            description: "Indicates the total number of audio streams (or tracks) contained within the media file.\n\nThis is distinct from \"Total Audio Channels\", which counts individual audio channels (such as stereo or 5.1) rather than separate streams."
+            description: "Indicates the total number of audio streams (or tracks) contained within the media file.\n\nThis is distinct from [Total Audio Channels](#field:Audio_Channels_Total), which counts individual audio channels (such as stereo or 5.1) rather than separate streams."
         }
     ],
     [
@@ -85,7 +88,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Audio_Codec_List",
         {
-            description: "A list of all audio codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use \"Audio Format List\" instead.",
+            description: "A list of all audio codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use [Audio Format List](#field:Audio_Format_List) instead.",
         }
     ],
     [
@@ -97,6 +100,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Audio_Format_WithHint_List",
         {
+            displayName: "Audio Format List (with hint)",
             description: "A list of all audio codecs found in the file, separated by forward slashes (/), including common alternative codec names."
         }
     ],
@@ -109,13 +113,13 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "CodecID",
         {
-            description: "Indicates the raw, container-specific identifier used to specify the format or codec of the file or stream.\n\nUnlike \"Format\", which provides a standardized name, this value reflects the exact tag stored in the container header."
+            description: "Indicates the raw, container-specific identifier used to specify the format or codec of the file or stream.\n\nUnlike [Format](#field:Format), which provides a standardized name, this value reflects the exact tag stored in the container header."
         }
     ],
     [
         "CodecID_Compatible",
         {
-            description: "A list of all codecs that are compatible with the identified container."
+            description: "Lists the compatible container brands or specification standards declared in the file header."
         }
     ],
     [
@@ -134,33 +138,33 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
         "CodecID_Info",
         {
             displayName: "Codec ID Information",
-            description: "Provides additional descriptive information or the full specification name associated with the \"Codec ID\"."
+            description: "Provides additional descriptive information or the full specification name associated with the [Codec ID](#field:CodecID)."
         }
     ],
     [
         "CodecID_String",
         {
-            description: "Indicates the raw, container-specific identifier used to specify the format or codec of the file or stream.\n\nUnlike \"Format\", which provides a standardized name, this value reflects the exact tag stored in the container header.\n\nFormatted as a human-readable string."
+            description: "Indicates the raw, container-specific identifier used to specify the format or codec of the file or stream.\n\nUnlike [Format](#field:Format), which provides a standardized name, this value reflects the exact tag stored in the container header.\n\nFormatted as a human-readable string."
         }
     ],
     [
         "CodecID_Url",
         {
             displayName: "Codec ID URL",
-            description: "Provides a reference URL with additional details or specifications associated with the \"Codec ID\"."
+            description: "Provides a reference URL with additional details or specifications associated with the [Codec ID](#field:CodecID)."
         }
     ],
     [
         "CodecID_Version",
         {
-            description: "Specifies the version of the \"Codec ID\"."
+            description: "Specifies the version of the [Codec ID](#field:CodecID)."
         }
     ],
     [
         "CompleteName",
         {
-            description: "Indicates the full path of the file, including the directory path, file name, and extension."
-        } //TODO: Add link to "File Path" under media/
+            description: "Indicates the full path of the file, including the directory path, file name, and extension.\n\nUsually identical to [File Path](#field:@ref)."
+        }
     ],
     [
         "CompleteName_Last",
@@ -171,13 +175,13 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Count",
         {
-            description: "Indicates the total number of internal parameter slots allocated for this stream, including empty fields that are omitted from the output."
+            description: "Indicates the total number of internal parameter slots allocated for this stream, including empty fields that are omitted from the tree."
         }
     ],
     [
         "DataSize",
         {
-            description: "Indicates the size (in bytes) of the raw media data payload within the file, excluding container headers and footers.\n\nTypically, the total \"File Size\" equals the sum of \"Header Size\", \"Data Size\", and \"Footer Size\"."
+            description: "Indicates the size (in bytes) of the raw media data payload within the file, excluding container headers and footers.\n\nTypically, the total [File Size](#field:FileSize) equals the sum of [Header Size](#field:HeaderSize), Data Size, and [Footer Size](#field:FooterSize)."
         }
     ],
     [
@@ -189,61 +193,61 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Delay_DropFrame",
         {
-            description: "Indicates whether the timecode used for \"Delay\" uses drop-frame numbering to stay aligned with real-world clock time (common in 29.97 or 59.94 fps NTSC video)."
+            description: "Indicates whether the timecode used for [Delay](#field:Delay) uses drop-frame numbering to stay aligned with real-world clock time (common in 29.97 or 59.94 fps NTSC video)."
         }
     ],
     [
         "Delay_Settings",
         {
-            description: "Specifies additional parameters that define how \"Delay\" is interpreted, such as timecode frame rate or drop-frame settings."
+            description: "Specifies additional parameters that define how [Delay](#field:Delay) is interpreted, such as timecode frame rate or drop-frame settings."
         }
     ],
     [
         "Delay_Source",
         {
-            description: "Indicates the source from which \"Delay\" was extracted, such as the container metadata or a specific stream."
+            description: "Indicates the source from which [Delay](#field:Delay) was extracted, such as the container metadata or a specific stream."
         }
     ],
     [
         "Delay_Source_String",
         {
-            description: "Indicates the source from which \"Delay\" was extracted, such as the container metadata or a specific stream.\n\nFormatted as a human-readable string."
+            description: "Indicates the source from which [Delay](#field:Delay) was extracted, such as the container metadata or a specific stream.\n\nFormatted as a human-readable string."
         }
     ],
     [
         "Delay_String",
         {
-            description: "Displays \"Delay\" as a human-readable string using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 213 ms)."
+            description: "Displays [Delay](#field:Delay) as a human-readable string using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 213 ms)."
         }
     ],
     [
         "Delay_String1",
         {
-            description: "Displays \"Delay\" using hours, minutes, seconds, and milliseconds with any zero-value units omitted (for example, 1 s 250 ms)."
+            description: "Displays [Delay](#field:Delay) using hours, minutes, seconds, and milliseconds with any zero-value units omitted (for example, 1 s 250 ms)."
         }
     ],
     [
         "Delay_String2",
         {
-            description: "Displays \"Delay\" using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 213 ms)."
+            description: "Displays [Delay](#field:Delay) using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 213 ms)."
         }
     ],
     [
         "Delay_String3",
         {
-            description: "Displays \"Delay\" in hours, minutes, seconds, and milliseconds format (HH:MM:SS.mmm)."
+            description: "Displays [Delay](#field:Delay) in hours, minutes, seconds, and milliseconds format (HH:MM:SS.mmm)."
         }
     ],
     [
         "Delay_String4",
         {
-            description: "Displays \"Delay\" in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
+            description: "Displays [Delay](#field:Delay) in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
         }
     ],
     [
         "Delay_String5",
         {
-            description: "Displays \"Delay\" in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
+            description: "Displays [Delay](#field:Delay) in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
         }
     ],
     [
@@ -261,37 +265,37 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Duration_End_String",
         {
-            description: "Displays \"Duration End\" as a human-readable string using up to the two largest non-zero time units (for example, 2 min 6 s), or as a formatted UTC timestamp."
+            description: "Displays [Duration End](#field:Duration_End) as a human-readable string using up to the two largest non-zero time units (for example, 2 min 6 s), or as a formatted UTC timestamp."
         }
     ],
     [
         "Duration_End_String1",
         {
-            description: "Displays \"Duration End\" using hours, minutes, seconds, and milliseconds with zero-value units omitted (for example, 2 min 6 s 584 ms)."
+            description: "Displays [Duration End](#field:Duration_End) using hours, minutes, seconds, and milliseconds with zero-value units omitted (for example, 2 min 6 s 584 ms)."
         }
     ],
     [
         "Duration_End_String2",
         {
-            description: "Displays \"Duration End\" using up to the two largest non-zero time units (for example, 2 min 6 s)."
+            description: "Displays [Duration End](#field:Duration_End) using up to the two largest non-zero time units (for example, 2 min 6 s)."
         }
     ],
     [
         "Duration_End_String3",
         {
-            description: "Displays \"Duration End\" in hours, minutes, seconds, and milliseconds format (HH:MM:SS.mmm)."
+            description: "Displays [Duration End](#field:Duration_End) in hours, minutes, seconds, and milliseconds format (HH:MM:SS.mmm)."
         }
     ],
     [
         "Duration_End_String4",
         {
-            description: "Displays \"Duration End\" in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
+            description: "Displays [Duration End](#field:Duration_End) in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
         }
     ],
     [
         "Duration_End_String5",
         {
-            description: "Displays \"Duration End\" in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
+            description: "Displays [Duration End](#field:Duration_End) in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
         }
     ],
     [
@@ -303,73 +307,73 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Duration_Start_String",
         {
-            description: "Displays \"Duration Start\" as a human-readable string using up to the two largest non-zero time units (for example, 2 min 6 s), or as a formatted UTC timestamp."
+            description: "Displays [Duration Start](#field:Duration_Start) as a human-readable string using up to the two largest non-zero time units (for example, 2 min 6 s), or as a formatted UTC timestamp."
         }
     ],
     [
         "Duration_Start_String1",
         {
-            description: "Displays \"Duration Start\" using hours, minutes, seconds, and milliseconds with zero-value units omitted (for example, 2 min 6 s 584 ms)."
+            description: "Displays [Duration Start](#field:Duration_Start) using hours, minutes, seconds, and milliseconds with zero-value units omitted (for example, 2 min 6 s 584 ms)."
         }
     ],
     [
         "Duration_Start_String2",
         {
-            description: "Displays \"Duration Start\" using up to the two largest non-zero time units (for example, 2 min 6 s)."
+            description: "Displays [Duration Start](#field:Duration_Start) using up to the two largest non-zero time units (for example, 2 min 6 s)."
         }
     ],
     [
         "Duration_Start_String3",
         {
-            description: "Displays \"Duration Start\" in hours, minutes, seconds, and milliseconds format (HH:MM:SS.mmm)."
+            description: "Displays [Duration Start](#field:Duration_Start) in hours, minutes, seconds, and milliseconds format (HH:MM:SS.mmm)."
         }
     ],
     [
         "Duration_Start_String4",
         {
-            description: "Displays \"Duration Start\" in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
+            description: "Displays [Duration Start](#field:Duration_Start) in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
         }
     ],
     [
         "Duration_Start_String5",
         {
-            description: "Displays \"Duration Start\" in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
+            description: "Displays [Duration Start](#field:Duration_Start) in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
         }
     ],
     [
         "Duration_String",
         {
-            description: "Displays \"Duration\" as a human-readable string using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 1 h 40 min)."
+            description: "Displays [Duration](#field:Duration) as a human-readable string using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 1 h 40 min)."
         }
     ],
     [
         "Duration_String1",
         {
-            description: "Displays \"Duration\" using hours, minutes, seconds, and milliseconds with any zero-value units omitted (for example, 1 h 40 min 12 s 500 ms)."
+            description: "Displays [Duration](#field:Duration) using hours, minutes, seconds, and milliseconds with any zero-value units omitted (for example, 1 h 40 min 12 s 500 ms)."
         }
     ],
     [
         "Duration_String2",
         {
-            description: "Displays \"Duration\" using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 1 h 40 min)."
+            description: "Displays [Duration](#field:Duration) using up to the two largest non-zero time units, with the second unit omitted if zero (for example, 1 h 40 min)."
         }
     ],
     [
         "Duration_String3",
         {
-            description: "Displays \"Duration\" in hours, minutes, seconds, and milliseconds format (for example, 01:40:00.000)."
+            description: "Displays [Duration](#field:Duration) in hours, minutes, seconds, and milliseconds format (for example, 01:40:00.000)."
         }
     ],
     [
         "Duration_String4",
         {
-            description: "Displays \"Duration\" in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
+            description: "Displays [Duration](#field:Duration) in timecode format using hours, minutes, seconds, and frames (HH:MM:SS:FF), with the last colon replaced by a semicolon (HH:MM:SS;FF) if drop-frame is available."
         }
     ],
     [
         "Duration_String5",
         {
-            description: "Displays \"Duration\" in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
+            description: "Displays [Duration](#field:Duration) in hours, minutes, seconds, and milliseconds followed by the frame-based timecode in parentheses, formatted as HH:MM:SS.mmm (HH:MM:SS:FF)."
         }
     ],
     [
@@ -399,7 +403,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Encryption_Method",
         {
-            description: "Specifies the method used to apply encryption to the media data."
+            description: "Specifies how encryption is structured across the media data."
         }
     ],
     [
@@ -418,14 +422,14 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
         "EPG_Positions_Begin",
         {
             displayName: "EPG Positions Begin",
-            description: "Indicates the starting index of the Electronic Program Guide (EPG) schedule entries stored in this stream's internal parameter list.\n\nTools use this index alongside \"EPG Positions End\" to locate and iterate through broadcast program listings."
+            description: "Indicates the starting index of the Electronic Program Guide (EPG) schedule entries stored in this stream's internal parameter list.\n\nTools use this index alongside [EPG Positions End](#field:EPG_Positions_End) to locate and iterate through broadcast program listings."
         }
     ],
     [
         "EPG_Positions_End",
         {
             displayName: "EPG Positions End",
-            description: "Indicates the ending index (exclusive) of the Electronic Program Guide (EPG) schedule entries stored in this stream's internal parameter list.\n\nSubtracting \"EPG Positions Begin\" from this value gives the total number of broadcast program listings."
+            description: "Indicates the ending index (exclusive) of the Electronic Program Guide (EPG) schedule entries stored in this stream's internal parameter list.\n\nSubtracting [EPG Positions Begin](#field:EPG_Positions_Begin) from this value gives the total number of broadcast program listings."
         }
     ],
     [
@@ -473,31 +477,31 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "FileSize_String",
         {
-            description: "Displays \"File Size\" as a human-readable string with its unit of measurement (calculated in powers of 1024)."
+            description: "Displays [File Size](#field:FileSize) as a human-readable string with its unit of measurement (calculated in powers of 1024)."
         }
     ],
     [
         "FileSize_String1",
         {
-            description: "Displays \"File Size\" with its unit of measurement (calculated in powers of 1024), rounded to the nearest integer."
+            description: "Displays [File Size](#field:FileSize) with its unit of measurement (calculated in powers of 1024), rounded to the nearest integer."
         }
     ],
     [
         "FileSize_String2",
         {
-            description: "Displays \"File Size\" with its unit of measurement (calculated in powers of 1024), rounded to two significant digits."
+            description: "Displays [File Size](#field:FileSize) with its unit of measurement (calculated in powers of 1024), rounded to two significant digits."
         }
     ],
     [
         "FileSize_String3",
         {
-            description: "Displays \"File Size\" with its unit of measurement (calculated in powers of 1024), rounded to three significant digits."
+            description: "Displays [File Size](#field:FileSize) with its unit of measurement (calculated in powers of 1024), rounded to three significant digits."
         }
     ],
     [
         "FileSize_String4",
         {
-            description: "Displays \"File Size\" with its unit of measurement (calculated in powers of 1024), rounded to four significant digits."
+            description: "Displays [File Size](#field:FileSize) with its unit of measurement (calculated in powers of 1024), rounded to four significant digits."
         }
     ],
     [
@@ -521,7 +525,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "FooterSize",
         {
-            description: "Indicates the size (in bytes) of the footer data structure located at the end of the file or stream."
+            description: "Indicates the size (in bytes) of the footer data structure located at the end of the file or stream.\n\nTypically, the total [File Size](#field:FileSize) equals the sum of [Header Size](#field:HeaderSize), [Data Size](#field:DataSize), and Footer Size."
         }
     ],
     [
@@ -593,6 +597,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Format_Url",
         {
+            displayName: "Format URL",
             description: "Provides a reference URL containing official specifications or documentation for the format."
         }
     ],
@@ -617,19 +622,19 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "FrameRate_Den",
         {
-            description: "Indicates the denominator component of the fractional frame rate value."
+            description: "Indicates the denominator component of the fractional [Frame Rate](#field:FrameRate) value."
         }
     ],
     [
         "FrameRate_Num",
         {
-            description: "Indicates the numerator component of the fractional frame rate value."
+            description: "Indicates the numerator component of the fractional [Frame Rate](#field:FrameRate) value."
         }
     ],
     [
         "FrameRate_String",
         {
-            description: "Displays the frame rate as a human-readable string with its unit of measurement."
+            description: "Displays [Frame Rate](#field:FrameRate) as a human-readable string with its unit of measurement."
         }
     ],
     [
@@ -642,7 +647,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "HeaderSize",
         {
-            description: "Indicates the size (in bytes) of the header data structure located at the beginning of the file or stream."
+            description: "Indicates the size (in bytes) of the header data structure located at the beginning of the file or stream.\n\nTypically, the total [File Size](#field:FileSize) equals the sum of Header Size, [Data Size](#field:DataSize), and [Footer Size](#field:FooterSize)."
         }
     ],
     [
@@ -654,13 +659,13 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "ID_String",
         {
-            description: "Displays the stream identification number as a human-readable string."
+            description: "Displays [ID](#field:ID) as a human-readable string."
         }
     ],
     [
         "Image_Codec_List",
         {
-            description: "A list of all image formats or codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use \"Image Format List\" instead."
+            description: "A list of all image formats or codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use [Image Format List](#field:Image_Format_List) instead."
         }
     ],
     [
@@ -672,6 +677,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Image_Format_WithHint_List",
         {
+            displayName: "Image Format List (with hint)",
             description: "A list of all image formats found in the file, separated by forward slashes (/), including common alternative codec names."
         }
     ],
@@ -691,7 +697,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Inform",
         {
-            description: "Indicates the result of the last Inform method call, containing the full formatted text report generated for the stream."
+            description: "Contains the complete, human-readable text summary report generated by MediaInfo for this stream."
         }
     ],
     [
@@ -709,13 +715,14 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "IsStreamable",
         {
+            displayName: "Streamable",
             description: "Indicates whether the file is structured to support streaming playback (such as progressive HTTP download or web streaming)."
         }
     ],
     [
         "Menu_Codec_List",
         {
-            description: "A list of all menu formats found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use \"Menu Format List\" instead."
+            description: "A list of all menu formats found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use [Menu Format List](#field:Menu_Format_List) instead."
         }
     ],
     [
@@ -727,6 +734,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Menu_Format_WithHint_List",
         {
+            displayName: "Menu Format List (with hint)",
             description: "A list of all menu formats found in the file, separated by forward slashes (/), including common alternative names."
         }
     ],
@@ -752,7 +760,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "MenuID_String",
         {
-            description: "Displays the menu identification number as a human-readable string."
+            description: "Displays [Menu ID](#field:MenuID) as a human-readable string."
         }
     ],
     [
@@ -764,13 +772,13 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "OriginalSourceMedium_ID_String",
         {
-            description: "Displays the original source medium identification tag as a human-readable string."
+            description: "Displays [Original Source Medium ID](#field:OriginalSourceMedium_ID) as a human-readable string."
         }
     ],
     [
         "Other_Codec_List",
         {
-            description: "A list of all auxiliary data formats found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use \"Other Format List\" instead."
+            description: "A list of all auxiliary data formats found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use [Other Format List](#field:Other_Format_List) instead."
         }
     ],
     [
@@ -782,6 +790,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Other_Format_WithHint_List",
         {
+            displayName: "Other Format List (with hint)",
             description: "A list of all auxiliary data formats found in the file, separated by forward slashes (/), including common alternative names."
         }
     ],
@@ -807,67 +816,69 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "OverallBitRate_Maximum",
         {
-            description: "Indicates the peak combined bit rate across all streams in the file, expressed in bits per second (bps)."
+            description: "Indicates the peak combined [Overall Bit Rate](#field:OverallBitRate) across all streams in the file, expressed in bits per second (bps)."
         }
     ],
     [
         "OverallBitRate_Maximum_String",
         {
-            description: "Displays the maximum combined bit rate of all streams as a human-readable string with its unit of measurement."
+            description: "Displays [Overall Bit Rate Maximum](#field:OverallBitRate_Maximum) as a human-readable string with its unit of measurement."
         }
     ],
     [
         "OverallBitRate_Minimum",
         {
-            description: "Indicates the lowest combined bit rate across all streams in the file, expressed in bits per second (bps)."
+            description: "Indicates the lowest combined [Overall Bit Rate](#field:OverallBitRate) across all streams in the file, expressed in bits per second (bps)."
         }
     ],
     [
         "OverallBitRate_Minimum_String",
         {
-            description: "Displays the minimum combined bit rate of all streams as a human-readable string with its unit of measurement."
+            description: "Displays [Overall Bit Rate Minimum](#field:OverallBitRate_Minimum) as a human-readable string with its unit of measurement."
         }
     ],
     [
         "OverallBitRate_Mode",
         {
-            description: "Indicates the overall bit rate control mode across all streams."
+            description: "Indicates the bit rate control mode used for [Overall Bit Rate](#field:OverallBitRate) across all streams."
         }
     ],
     [
         "OverallBitRate_Mode_String",
         {
-            description: "Displays the overall bit rate mode as a human-readable word."
+            description: "Displays [Overall Bit Rate Mode](#field:OverallBitRate_Mode) as a human-readable word."
         }
     ],
     [
         "OverallBitRate_Nominal",
         {
-            description: "Indicates the target nominal bit rate for all streams combined, expressed in bits per second (bps)."
+            displayName: "Overall Bit Rate (Nominal)",
+            description: "Indicates the nominal (target) bit rate for all streams combined, expressed in bits per second (bps).\n\nUnlike [Overall Bit Rate](#field:OverallBitRate), which reflects the actual average data rate of the file, this value represents the intended bit rate that the encoder was instructed to aim for."
         }
     ],
     [
         "OverallBitRate_Nominal_String",
         {
-            description: "Displays the nominal combined bit rate as a human-readable string with its unit of measurement."
+            description: "Displays [Overall Bit Rate (Nominal)](#field:OverallBitRate_Nominal) as a human-readable string with its unit of measurement."
         }
     ],
     [
         "OverallBitRate_String",
         {
-            description: "Displays the combined bit rate of all streams as a human-readable string with its unit of measurement."
+            description: "Displays [Overall Bit Rate](#field:OverallBitRate) as a human-readable string with its unit of measurement."
         }
     ],
     [
         "PackageName",
         {
-            description: "Indicates the package name embedded within the MXF container metadata."
+            displayName: "Package Name",
+            description: "Indicates the human-readable name assigned to a media package inside an MXF (Material eXchange Format) container.\n\nIn broadcast and cinema, cameras and editing software store identifiers here so media can be tracked and relinked even if the file is renamed on disk."
         }
     ],
     [
         "Status",
         {
-            description: "Indicates the internal parsing status bit field (such as accepted, filled, updated, or finished)."
+            description: "An internal MediaInfo bitmask tracking which parsing stages have completed for this stream (such as accepted, filled, updated, or finished)."
         }
     ],
     [
@@ -885,26 +896,26 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "StreamKind_String",
         {
-            description: "Displays the name of the media stream type as a human-readable string."
+            description: "Displays [Stream Kind](#field:StreamKind) as a human-readable string."
         }
     ],
     [
         "StreamKindID",
         {
-            description: "Indicates the zero-based identification number assigned to the stream in order of parsing."
+            description: "Indicates the zero-based identification number assigned to the stream in order of parsing, grouped by [Stream Kind](#field:StreamKind).\n\nThis is the zero-based counterpart to [Stream Kind Position](#field:StreamKindPos)."
         }
     ],
     [
         "StreamKindPos",
         {
             displayName: "Stream Kind Position",
-            description: "Indicates the one-based position number of the stream when multiple streams of the same kind exist, assigned in order of parsing."
+            description: "Indicates the one-based position number of the stream when multiple streams of the same [Stream Kind](#field:StreamKind) exist, assigned in order of parsing.\n\nThis is the one-based counterpart to [Stream Kind ID](#field:StreamKindID)."
         }
     ],
     [
         "StreamOrder",
         {
-            description: "Indicates the zero-based sequential order of the stream within the file for its specific stream type."
+            description: "Indicates the zero-based sequential position of the stream within the container across all stream types."
         }
     ],
     [
@@ -916,91 +927,91 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "StreamSize_Demuxed",
         {
-            description: "Indicates the size of the stream in bytes after being demuxed from the container."
+            description: "Indicates the size of the stream in bytes after being demuxed from the container, excluding container framing overhead present in [Stream Size](#field:StreamSize)."
         }
     ],
     [
         "StreamSize_Demuxed_String",
         {
-            description: "Displays the demuxed stream size as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
+            description: "Displays [Stream Size Demuxed](#field:StreamSize_Demuxed) as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
         }
     ],
     [
         "StreamSize_Demuxed_String1",
         {
-            description: "Displays the demuxed stream size with its unit of measurement (calculated in powers of 1024), rounded to the nearest integer."
+            description: "Displays [Stream Size Demuxed](#field:StreamSize_Demuxed) with its unit of measurement (calculated in powers of 1024), rounded to the nearest integer."
         }
     ],
     [
         "StreamSize_Demuxed_String2",
         {
-            description: "Displays the demuxed stream size with its unit of measurement (calculated in powers of 1024), rounded to two significant digits."
+            description: "Displays [Stream Size Demuxed](#field:StreamSize_Demuxed) with its unit of measurement (calculated in powers of 1024), rounded to two significant digits."
         }
     ],
     [
         "StreamSize_Demuxed_String3",
         {
-            description: "Displays the demuxed stream size with its unit of measurement (calculated in powers of 1024), rounded to three significant digits."
+            description: "Displays [Stream Size Demuxed](#field:StreamSize_Demuxed) with its unit of measurement (calculated in powers of 1024), rounded to three significant digits."
         }
     ],
     [
         "StreamSize_Demuxed_String4",
         {
-            description: "Displays the demuxed stream size with its unit of measurement (calculated in powers of 1024), rounded to four significant digits."
+            description: "Displays [Stream Size Demuxed](#field:StreamSize_Demuxed) with its unit of measurement (calculated in powers of 1024), rounded to four significant digits."
         }
     ],
     [
         "StreamSize_Demuxed_String5",
         {
-            description: "Displays the demuxed stream size as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
+            description: "Displays [Stream Size Demuxed](#field:StreamSize_Demuxed) as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
         }
     ],
     [
         "StreamSize_Proportion",
         {
-            description: "Indicates the proportion of the total file size occupied by this stream."
+            description: "Indicates the proportion of the total [File Size](#field:FileSize) occupied by [Stream Size](#field:StreamSize)."
         }
     ],
     [
         "StreamSize_String",
         {
-            description: "Displays the stream size as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
+            description: "Displays [Stream Size](#field:StreamSize) as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
         }
     ],
     [
         "StreamSize_String1",
         {
-            description: "Displays the stream size with its unit of measurement (calculated in powers of 1024), rounded to the nearest integer."
+            description: "Displays [Stream Size](#field:StreamSize) with its unit of measurement (calculated in powers of 1024), rounded to the nearest integer."
         }
     ],
     [
         "StreamSize_String2",
         {
-            description: "Displays the stream size with its unit of measurement (calculated in powers of 1024), rounded to two significant digits."
+            description: "Displays [Stream Size](#field:StreamSize) with its unit of measurement (calculated in powers of 1024), rounded to two significant digits."
         }
     ],
     [
         "StreamSize_String3",
         {
-            description: "Displays the stream size with its unit of measurement (calculated in powers of 1024), rounded to three significant digits."
+            description: "Displays [Stream Size](#field:StreamSize) with its unit of measurement (calculated in powers of 1024), rounded to three significant digits."
         }
     ],
     [
         "StreamSize_String4",
         {
-            description: "Displays the stream size with its unit of measurement (calculated in powers of 1024), rounded to four significant digits."
+            description: "Displays [Stream Size](#field:StreamSize) with its unit of measurement (calculated in powers of 1024), rounded to four significant digits."
         }
     ],
     [
         "StreamSize_String5",
         {
-            description: "Displays the stream size as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
+            description: "Displays [Stream Size](#field:StreamSize) as a human-readable string with its unit of measurement (calculated in powers of 1024) and percentage share."
         }
     ],
     [
         "Text_Codec_List",
         {
-            description: "A list of all text formats or codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use \"Text Format List\" instead."
+            description: "A list of all text formats or codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use [Text Format List](#field:Text_Format_List) instead."
         }
     ],
     [
@@ -1012,6 +1023,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Text_Format_WithHint_List",
         {
+            displayName: "Text Format List (with hint)",
             description: "A list of all text formats found in the file, separated by forward slashes (/), including common alternative names."
         }
     ],
@@ -1031,7 +1043,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "UMID",
         {
-            description: "Indicates the Universal Media Identifier (UMID) assigned to uniquely identify the material."
+            description: "Indicates the Unique Material Identifier (standardized by SMPTE 330M), a globally unique 32- or 64-byte hexadecimal ID generated by cameras and editing systems (usually within MXF containers) to permanently identify a specific piece of media.\n\nUnlike [Package Name](#field:PackageName), a UMID guarantees no two clips share the same ID, allowing editing software to reliably match and relink footage."
         }
     ],
     [
@@ -1043,34 +1055,34 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "UniqueID_String",
         {
-            description: "Displays the unique stream identification string as a human-readable value."
+            description: "Displays [Unique ID](#field:UniqueID) as a human-readable string."
         }
     ],
     [
         "UniversalAdID_Registry",
         {
             displayName: "Universal Ad-ID Registry",
-            description: "Specifies the registry authority responsible for the Universal Ad-ID associated with the asset."
+            description: "Indicates the issuing authority or domain (such as `ad-id.org` or `clearcast.co.uk`) that registered the commercial's Universal Ad-ID.\n\nBroadcast networks and streaming platforms pair this registry name with the [Universal Ad-ID Value](#field:UniversalAdID_Value) to uniquely track advertisements across regions and distribution channels."
         }
     ],
     [
         "UniversalAdID_String",
         {
             displayName: "Universal Ad-ID String",
-            description: "Displays the Universal Ad-ID as a formatted string."
+            description: "Displays the complete Universal Ad-ID formatted as a single human-readable string combining the [Universal Ad-ID Value](#field:UniversalAdID_Value) and [Universal Ad-ID Registry](#field:UniversalAdID_Registry)."
         }
     ],
     [
         "UniversalAdID_Value",
         {
             displayName: "Universal Ad-ID Value",
-            description: "Indicates the unique identification value assigned by the Universal Ad-ID registry for advertising asset tracking."
+            description: "Indicates the unique alphanumeric code assigned to a commercial asset by the organization specified in [Universal Ad-ID Registry](#field:UniversalAdID_Registry) for broadcast and streaming ad tracking."
         }
     ],
     [
         "Video_Codec_List",
         {
-            description: "A list of all video formats or codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use \"Video Format List\" instead."
+            description: "A list of all video formats or codecs found in the file, separated by forward slashes (/).\n\nThis field is deprecated. Use [Video Format List](#field:Video_Format_List) instead."
         }
     ],
     [
@@ -1082,6 +1094,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Video_Format_WithHint_List",
         {
+            displayName: "Video Format List (with hint)",
             description: "A list of all video formats found in the file, separated by forward slashes (/), including common alternative codec names."
         }
     ],
@@ -1103,7 +1116,7 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "ContentType",
         {
-            description: "Indicates the type or genre of the content."
+            description: "Indicates the high-level content category (such as Movie, TV Show, Music, or Podcast), distinct from its artistic [Genre](#field:Genre)."
         }
     ],
     [
@@ -1121,7 +1134,8 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "ICRA",
         {
-            description: "Indicates the Internet Content Rating Association (ICRA) rating, formerly known as RSACi."
+            displayName: "ICRA Rating",
+            description: "Indicates the Internet Content Rating Association (ICRA) content and age advisory rating (formerly known as RSACi).\n\nUsed primarily in legacy Windows Media (WMV/ASF) metadata to classify sensitive themes like violence, language, and nudity for parental control filtering."
         }
     ],
     [
@@ -1180,5 +1194,1095 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     ],
 
     //? https://mediainfo.js.org/api/interface/GeneralTrack/#Entity
+    [
+        "Accompaniment",
+        {
+            description: "Indicates the supporting band, orchestra, ensemble, or session musician(s) accompanying the main [Performer](#field:Performer)."
+        }
+    ],
+    [
+        "Actor",
+        {
+            description: "Indicates the real name of an actor or actress performing in the production."
+        }
+    ],
+    [
+        "Actor_Character",
+        {
+            description: "Indicates the name of the character portrayed by the [Actor](#field:Actor) in the production."
+        }
+    ],
+    [
+        "Album_Performer",
+        {
+            description: "Indicates the primary artist or performer credited for the entire album."
+        }
+    ],
+    [
+        "Album_Performer_Sort",
+        {
+            description: "Provides an alternate version of [Album Performer](#field:Album_Performer) formatted for alphabetical sorting."
+        }
+    ],
+    [
+        "Album_Performer_Url",
+        {
+            displayName: "Album Performer URL",
+            description: "Provides the official website or homepage URL for the [Album Performer](#field:Album_Performer)."
+        }
+    ],
+    [
+        "Arranger",
+        {
+            description: "Indicates the person who adapted or arranged the musical composition for performance."
+        }
+    ],
+    [
+        "ArtDirector",
+        {
+            description: "Indicates the person responsible for overseeing the artists and craftspeople who build the sets and visual environments."
+        }
+    ],
+    [
+        "AssistantDirector",
+        {
+            description: "Indicates the assistant director who supports the [Director](#field:Director) with production scheduling and on-set management."
+        }
+    ],
+    [
+        "Choreographer",
+        {
+            description: "Indicates the person who designed and directed the dance or movement sequences."
+        }
+    ],
+    [
+        "CoDirector",
+        {
+            displayName: "Co-Director",
+            description: "Indicates a co-director sharing creative direction duties alongside the primary [Director](#field:Director)."
+        }
+    ],
+    [
+        "CommissionedBy",
+        {
+            description: "Indicates the person or organization that commissioned the creation of the work."
+        }
+    ],
+    [
+        "Composer",
+        {
+            description: "Indicates the person who composed the original musical piece or score."
+        }
+    ],
+    [
+        "Composer_Nationality",
+        {
+            description: "Indicates the nationality of the primary [Composer](#field:Composer)."
+        }
+    ],
+    [
+        "Composer_Sort",
+        {
+            description: "Provides an alternate version of [Composer](#field:Composer) formatted for alphabetical sorting."
+        }
+    ],
+    [
+        "Conductor",
+        {
+            description: "Indicates the person who conducted the orchestra, choir, or musical ensemble."
+        }
+    ],
+    [
+        "CoProducer",
+        {
+            displayName: "Co-Producer",
+            description: "Indicates a co-producer sharing production duties alongside the primary [Producer](#field:Producer)."
+        }
+    ],
+    [
+        "CostumeDesigner",
+        {
+            description: "Indicates the person responsible for designing the costumes and wardrobe for the production."
+        }
+    ],
+    [
+        "Director",
+        {
+            description: "Indicates the primary director of the film, episode, or video production."
+        }
+    ],
+    [
+        "DirectorOfPhotography",
+        {
+            description: "Indicates the director of photography (cinematographer) responsible for camera work and lighting."
+        }
+    ],
+    [
+        "DistributedBy",
+        {
+            description: "Indicates the company or organization responsible for distributing the media."
+        }
+    ],
+    [
+        "EditedBy",
+        {
+            description: "Indicates the editor responsible for assembling and cutting the final audio or video."
+        }
+    ],
+    [
+        "EncodedBy",
+        {
+            description: "Indicates the person or organization that encoded or ripped the media file."
+        }
+    ],
+    [
+        "ExecutiveProducer",
+        {
+            description: "Indicates an executive producer overseeing the financing or high-level production of the media."
+        }
+    ],
+    [
+        "Label",
+        {
+            description: "Indicates the record label brand or trademark associated with marketing the music recording or video."
+        }
+    ],
+    [
+        "Lyricist",
+        {
+            description: "Indicates the person who wrote the lyrics for the musical piece."
+        }
+    ],
+    [
+        "MasteredBy",
+        {
+            description: "Indicates the mastering engineer who prepared the final audio mix for physical or digital release."
+        }
+    ],
+    [
+        "MusicBy",
+        {
+            description: "Indicates the primary musical artist or score [Composer](#field:Composer) credited for the media."
+        }
+    ],
+    [
+        "Original_Lyricist",
+        {
+            description: "Indicates the original [Lyricist](#field:Lyricist) or text writer, typically credited when the track is a cover, translation, or adaptation."
+        }
+    ],
+    [
+        "Original_Performer",
+        {
+            description: "Indicates the original [Performer](#field:Performer) or artist, typically credited when the track is a cover or remix."
+        }
+    ],
+    [
+        "OriginalSourceForm_DistributedBy",
+        {
+            description: "Indicates the person or organization that supplied or distributed the original source medium from which this file was created."
+        }
+    ],
+    [
+        "Performer",
+        {
+            description: "Indicates the primary artist(s) or performer(s) featured in the track or production."
+        }
+    ],
+    [
+        "Performer_Sort",
+        {
+            description: "Provides an alternate version of [Performer](#field:Performer) formatted for alphabetical sorting."
+        }
+    ],
+    [
+        "Performer_Url",
+        {
+            displayName: "Performer URL",
+            description: "Provides the official website or homepage URL for the [Performer](#field:Performer)."
+        }
+    ],
+    [
+        "Producer",
+        {
+            description: "Indicates the primary producer responsible for overseeing the creation of the media."
+        }
+    ],
+    [
+        "ProductionDesigner",
+        {
+            description: "Indicates the person responsible for designing the overall visual aesthetic and physical look of the production."
+        }
+    ],
+    [
+        "ProductionStudio",
+        {
+            description: "Indicates the primary studio or production company that created the media."
+        }
+    ],
+    [
+        "Publisher",
+        {
+            description: "Indicates the organization or [Label](#field:Label) responsible for publishing the media."
+        }
+    ],
+    [
+        "Publisher_URL",
+        {
+            displayName: "Publisher URL",
+            description: "Provides the official website URL for the [Publisher](#field:Publisher)."
+        }
+    ],
+    [
+        "RemixedBy",
+        {
+            description: "Indicates the artist(s) or producer(s) who remixed or reinterpreted the original track."
+        }
+    ],
+    [
+        "ScreenplayBy",
+        {
+            description: "Indicates the author of the screenplay or shooting script for a film or television production."
+        }
+    ],
+    [
+        "SoundEngineer",
+        {
+            description: "Indicates the sound engineer or audio recordist responsible for capturing or mixing the audio."
+        }
+    ],
+    [
+        "ThanksTo",
+        {
+            description: "Lists acknowledgments or special thanks to individuals and organizations involved in the production."
+        }
+    ],
+    [
+        "WrittenBy",
+        {
+            description: "Indicates the author of the underlying story, script, or written work."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Identifier
+    [
+        "BarCode",
+        {
+            displayName: "Barcode",
+            description: "Indicates the retail barcode identifier printed on the physical product packaging, typically formatted as a 13-digit EAN (European Article Number) or 12-digit UPC (Universal Product Code) for point-of-sale and inventory tracking."
+        }
+    ],
+    [
+        "CatalogNumber",
+        {
+            description: "Indicates the internal catalog identifier assigned by the record [Label](#field:Label) or [Publisher](#field:Publisher) to uniquely track a specific release within their own discography or distribution system."
+        }
+    ],
+    [
+        "ISAN",
+        {
+            displayName: "ISAN",
+            description: "Indicates the International Standard Audiovisual Number (ISO 15706), a globally unique identifier assigned to audiovisual works—such as films, television episodes, and broadcasts—to track the underlying work across different versions, languages, and distribution formats."
+        }
+    ],
+    [
+        "ISBN",
+        {
+            displayName: "ISBN",
+            description: "Indicates the International Standard Book Number, a globally unique commercial identifier assigned to books and book-like publications, commonly found in audiobook or bundled print-media metadata."
+        }
+    ],
+    [
+        "ISRC",
+        {
+            displayName: "ISRC",
+            description: "Indicates the International Standard Recording Code (ISO 3901), a unique identifier assigned to an individual sound or music video recording to track royalties, airplay, and digital streaming usage across platforms."
+        }
+    ],
+    [
+        "LabelCode",
+        {
+            description: "Indicates the numeric Label Code (LC) assigned by the German collecting society GVL to identify the specific record [Label](#field:Label) or rights holder for broadcast and performance royalty collection."
+        }
+    ],
+    [
+        "LCCN",
+        {
+            displayName: "LCCN",
+            description: "Indicates the Library of Congress Control Number, a unique serial number assigned by the United States Library of Congress to catalog and index published books, audio recordings, and audiovisual works."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Info
+    [
+        "Cover",
+        {
+            description: "Indicates whether cover art or embedded album artwork is present in the media file."
+        }
+    ],
+    [
+        "Cover_Data",
+        {
+            description: "Contains the Base64-encoded binary image data of the embedded [Cover](#field:Cover) art."
+        }
+    ],
+    [
+        "Cover_Description",
+        {
+            description: "Provides a descriptive caption or label associated with the embedded [Cover](#field:Cover) art."
+        }
+    ],
+    [
+        "Cover_Mime",
+        {
+            displayName: "Cover MIME Type",
+            description: "Specifies the MIME type (image format) of the embedded [Cover](#field:Cover) art."
+        }
+    ],
+    [
+        "Cover_Type",
+        {
+            description: "Indicates the role or classification of the embedded [Cover](#field:Cover) art within the release (such as front cover, back cover, or artist photo)."
+        }
+    ],
+    [
+        "Lyrics",
+        {
+            description: "Contains the embedded song lyrics or vocal text associated with the audio track."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Legal
+    [
+        "Copyright",
+        {
+            description: "Indicates the copyright notice or legal ownership statement for the media content."
+        }
+    ],
+    [
+        "Copyright_Url",
+        {
+            displayName: "Copyright URL",
+            description: "Provides a reference URL with additional details regarding the [Copyright](#field:Copyright) notice or licensing terms."
+        }
+    ],
+    [
+        "Country",
+        {
+            description: "Indicates the country where the content was produced, broadcast, or legally registered."
+        }
+    ],
+    [
+        "NetworkName",
+        {
+            description: "Indicates the name of the broadcast network or television channel airing or distributing the stream."
+        }
+    ],
+    [
+        "OriginalNetworkName",
+        {
+            description: "Indicates the name of the original broadcast network that first aired or produced the content, if rebroadcast by another [Network Name](#field:NetworkName)."
+        }
+    ],
+    [
+        "Owner",
+        {
+            description: "Indicates the legal owner or rights holder of the file or media content."
+        }
+    ],
+    [
+        "Producer_Copyright",
+        {
+            description: "Indicates the copyright notice specifically held by the [Producer](#field:Producer) or production company."
+        }
+    ],
+    [
+        "Service_Url",
+        {
+            displayName: "Service URL",
+            description: "Provides the official website URL associated with the broadcast or streaming [Service Name](#field:ServiceName)."
+        }
+    ],
+    [
+        "ServiceChannel",
+        {
+            description: "Indicates the logical channel number or virtual channel identifier assigned to the broadcast service."
+        }
+    ],
+    [
+        "ServiceName",
+        {
+            description: "Indicates the name of the broadcast service, station, or digital stream (such as a DVB or ATSC channel name)."
+        }
+    ],
+    [
+        "ServiceProvider",
+        {
+            description: "Indicates the company or broadcast operator providing the [Service Name](#field:ServiceName)."
+        }
+    ],
+    [
+        "ServiceProvider_Url",
+        {
+            displayName: "Service Provider URL",
+            description: "Provides the official website URL for the [Service Provider](#field:ServiceProvider)."
+        }
+    ],
+    [
+        "ServiceType",
+        {
+            description: "Indicates the category of the broadcast service (such as digital television, radio, or teletext)."
+        }
+    ],
+    [
+        "TermsOfUse",
+        {
+            description: "Specifies the terms of use, licensing conditions, or usage restrictions governing the media file."
+        }
+    ],
+    [
+        "TimeZone",
+        {
+            description: "Indicates the time zone offset associated with the broadcast schedule or recorded timestamps."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Personal
+    [
+        "Added_Date",
+        {
+            description: "Indicates the date and time when the media file was added to the user's library or collection."
+        }
+    ],
+    [
+        "Comment",
+        {
+            description: "Contains general user comments, notes, or miscellaneous remarks embedded in the file metadata."
+        }
+    ],
+    [
+        "Played_Count",
+        {
+            description: "Indicates the number of times the media file has been played."
+        }
+    ],
+    [
+        "Played_First_Date",
+        {
+            description: "Indicates the date and time when the media file was first played."
+        }
+    ],
+    [
+        "Played_Last_Date",
+        {
+            description: "Indicates the date and time when the media file was most recently played."
+        }
+    ],
+    [
+        "Rating",
+        {
+            description: "Indicates the user's personal preference or star rating assigned to the media item, distinct from official age or content advisories like [Law Rating](#field:LawRating)."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Spatial
+    [
+        "Archival_Location",
+        {
+            description: "Indicates the physical storage location or archive where the original source medium is kept."
+        }
+    ],
+    [
+        "Recorded_Location",
+        {
+            description: "Indicates the geographic location, venue, or studio where the media was recorded."
+        }
+    ],
+    [
+        "Written_Location",
+        {
+            description: "Indicates the geographic location where the script, lyrics, or composition was written."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Technical
+    [
+        "BPM",
+        {
+            displayName: "BPM",
+            description: "Indicates the tempo of the music track in beats per minute (BPM)."
+        }
+    ],
+    [
+        "Cropped",
+        {
+            description: "Indicates whether the media was cropped during capture or processing."
+        }
+    ],
+    [
+        "Dimensions",
+        {
+            description: "Indicates the physical dimensions of the original source medium before digitization."
+        }
+    ],
+    [
+        "DotsPerInch",
+        {
+            description: "Indicates the scanning or digitization resolution of the source medium, expressed in dots per inch (DPI)."
+        }
+    ],
+    [
+        "Encoded_Application",
+        {
+            description: "Indicates the software application used to create, mux, or encode the file, distinct from the underlying [Encoded Library](#field:Encoded_Library)."
+        }
+    ],
+    [
+        "Encoded_Application_CompanyName",
+        {
+            description: "Indicates the developer or vendor company behind the [Encoded Application](#field:Encoded_Application)."
+        }
+    ],
+    [
+        "Encoded_Application_Name",
+        {
+            description: "Indicates the standalone product name of the [Encoded Application](#field:Encoded_Application), excluding version details."
+        }
+    ],
+    [
+        "Encoded_Application_String",
+        {
+            description: "Displays [Encoded Application](#field:Encoded_Application) combined with its version and vendor details as a human-readable string."
+        }
+    ],
+    [
+        "Encoded_Application_Url",
+        {
+            displayName: "Encoded Application URL",
+            description: "Provides the official website URL for the [Encoded Application](#field:Encoded_Application)."
+        }
+    ],
+    [
+        "Encoded_Application_Version",
+        {
+            description: "Specifies the version number of the [Encoded Application](#field:Encoded_Application)."
+        }
+    ],
+    [
+        "Encoded_Hardware",
+        {
+            description: "Indicates the hardware device, camera, or dedicated encoder unit used to record or encode the media."
+        }
+    ],
+    [
+        "Encoded_Hardware_CompanyName",
+        {
+            description: "Indicates the manufacturer of the [Encoded Hardware](#field:Encoded_Hardware)."
+        }
+    ],
+    [
+        "Encoded_Hardware_Model",
+        {
+            description: "Specifies the model identifier of the [Encoded Hardware](#field:Encoded_Hardware)."
+        }
+    ],
+    [
+        "Encoded_Hardware_Name",
+        {
+            description: "Indicates the product name of the [Encoded Hardware](#field:Encoded_Hardware)."
+        }
+    ],
+    [
+        "Encoded_Hardware_String",
+        {
+            description: "Displays [Encoded Hardware](#field:Encoded_Hardware) combined with its manufacturer and model details as a human-readable string."
+        }
+    ],
+    [
+        "Encoded_Hardware_Version",
+        {
+            description: "Specifies the hardware revision or firmware version of the [Encoded Hardware](#field:Encoded_Hardware)."
+        }
+    ],
+    [
+        "Encoded_Library",
+        {
+            description: "Indicates the underlying codec library or software engine used to encode the stream, distinct from the front-end [Encoded Application](#field:Encoded_Application)."
+        }
+    ],
+    [
+        "Encoded_Library_CompanyName",
+        {
+            displayName: "Encoded Library Company Name",
+            description: "Indicates the developer or organization behind the [Encoded Library](#field:Encoded_Library)."
+        }
+    ],
+    [
+        "Encoded_Library_Date",
+        {
+            description: "Indicates the build or release date of the [Encoded Library](#field:Encoded_Library)."
+        }
+    ],
+    [
+        "Encoded_Library_Name",
+        {
+            description: "Indicates the standalone name of the [Encoded Library](#field:Encoded_Library), excluding version and build details."
+        }
+    ],
+    [
+        "Encoded_Library_Settings",
+        {
+            description: "Lists the raw encoder parameters, flags, and configuration options passed to the [Encoded Library](#field:Encoded_Library) during encoding."
+        }
+    ],
+    [
+        "Encoded_Library_String",
+        {
+            description: "Displays [Encoded Library](#field:Encoded_Library) combined with its version and build date as a human-readable string."
+        }
+    ],
+    [
+        "Encoded_Library_Version",
+        {
+            description: "Specifies the version number of the [Encoded Library](#field:Encoded_Library)."
+        }
+    ],
+    [
+        "Encoded_OperatingSystem",
+        {
+            displayName: "Encoded Operating System",
+            description: "Indicates the operating system environment on which the file was encoded or muxed."
+        }
+    ],
+    [
+        "Encoded_OperatingSystem_CompanyName",
+        {
+            displayName: "Encoded Operating System Company Name",
+            description: "Indicates the vendor or organization behind the [Encoded Operating System](#field:Encoded_OperatingSystem)."
+        }
+    ],
+    [
+        "Encoded_OperatingSystem_Name",
+        {
+            displayName: "Encoded Operating System Name",
+            description: "Indicates the standalone name of the [Encoded Operating System](#field:Encoded_OperatingSystem), excluding version details."
+        }
+    ],
+    [
+        "Encoded_OperatingSystem_String",
+        {
+            displayName: "Encoded Operating System String",
+            description: "Displays [Encoded Operating System](#field:Encoded_OperatingSystem) combined with its version details as a human-readable string."
+        }
+    ],
+    [
+        "Encoded_OperatingSystem_Version",
+        {
+            displayName: "Encoded Operating System Version",
+            description: "Specifies the version or build number of the [Encoded Operating System](#field:Encoded_OperatingSystem)."
+        }
+    ],
+    [
+        "Lightness",
+        {
+            description: "Indicates the relative brightness or lightness level recorded during the digitization of the source medium."
+        }
+    ],
+    [
+        "OriginalSourceForm",
+        {
+            description: "Indicates the physical format or medium type of the original source material before digitization (such as film, magnetic tape, or vinyl)."
+        }
+    ],
+    [
+        "OriginalSourceForm_Cropped",
+        {
+            description: "Indicates whether the [Original Source Form](#field:OriginalSourceForm) was cropped during transfer or digitization."
+        }
+    ],
+    [
+        "OriginalSourceForm_Name",
+        {
+            description: "Indicates the title or descriptive name of the [Original Source Form](#field:OriginalSourceForm)."
+        }
+    ],
+    [
+        "OriginalSourceForm_NumColors",
+        {
+            displayName: "Original Source Form Number of Colors",
+            description: "Indicates the number of colors or color depth present in the [Original Source Form](#field:OriginalSourceForm) when digitizing visual material."
+        }
+    ],
+    [
+        "OriginalSourceForm_Sharpness",
+        {
+            description: "Indicates the sharpness setting or visual clarity level recorded when digitizing the [Original Source Form](#field:OriginalSourceForm)."
+        }
+    ],
+    [
+        "OriginalSourceMedium",
+        {
+            description: "Indicates the physical carrier or storage medium of the original recording (such as CD, DVD, Blu-ray, or cassette)."
+        }
+    ],
+    [
+        "Tagged_Application",
+        {
+            description: "Indicates the software application used to write or edit the metadata tags inside the file, which may differ from the [Encoded Application](#field:Encoded_Application)."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Temporal
+    [
+        "Encoded_Date",
+        {
+            description: "Indicates the date and time when the media file or stream was encoded or muxed."
+        }
+    ],
+    [
+        "File_Created_Date",
+        {
+            description: "Indicates the filesystem creation date and time of the file, reported in Coordinated Universal Time (UTC)."
+        }
+    ],
+    [
+        "File_Created_Date_Local",
+        {
+            description: "Indicates the filesystem creation date and time of the file, reported in the local time zone rather than UTC as in [File Created Date](#field:File_Created_Date)."
+        }
+    ],
+    [
+        "File_Modified_Date",
+        {
+            description: "Indicates the filesystem last-modified date and time of the file, reported in Coordinated Universal Time (UTC)."
+        }
+    ],
+    [
+        "File_Modified_Date_Local",
+        {
+            description: "Indicates the filesystem last-modified date and time of the file, reported in the local time zone rather than UTC as in [File Modified Date](#field:File_Modified_Date)."
+        }
+    ],
+    [
+        "Mastered_Date",
+        {
+            description: "Indicates the date when the audio or video master was finalized for physical or digital release."
+        }
+    ],
+    [
+        "Original_Released_Date",
+        {
+            description: "Indicates the original release date of the underlying work, distinct from [Released Date](#field:Released_Date) when the file is a reissue, remaster, or later edition."
+        }
+    ],
+    [
+        "Recorded_Date",
+        {
+            description: "Indicates the date and time when the audio or video content was originally recorded or captured."
+        }
+    ],
+    [
+        "Released_Date",
+        {
+            description: "Indicates the date when this specific edition, broadcast, or release of the media was published."
+        }
+    ],
+    [
+        "Tagged_Date",
+        {
+            description: "Indicates the date and time when the metadata tags were written or last updated in the file."
+        }
+    ],
+    [
+        "Written_Date",
+        {
+            description: "Indicates the date when the underlying script, lyrics, or musical composition was written."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/GeneralTrack/#Title
+    [
+        "Album",
+        {
+            description: "Indicates the title of the album, collection, or release to which the track belongs."
+        }
+    ],
+    [
+        "Album_More",
+        {
+            description: "Provides additional descriptive details or subtitle information associated with the [Album](#field:Album)."
+        }
+    ],
+    [
+        "Album_Sort",
+        {
+            description: "Provides an alternate version of [Album](#field:Album) formatted for alphabetical sorting."
+        }
+    ],
+    [
+        "Chapter",
+        {
+            description: "Indicates the name or title of the chapter within the media file."
+        }
+    ],
+    [
+        "Collection",
+        {
+            description: "Indicates the name of the broader franchise, anthology, or multi-work collection to which the media belongs."
+        }
+    ],
+    [
+        "Comic",
+        {
+            description: "Indicates the title of the comic book or graphic novel series associated with the media."
+        }
+    ],
+    [
+        "Comic_More",
+        {
+            description: "Provides additional descriptive details or issue subtitle information associated with the [Comic](#field:Comic)."
+        }
+    ],
+    [
+        "Comic_Position_Total",
+        {
+            description: "Indicates the total number of issues or volumes in the [Comic](#field:Comic) series."
+        }
+    ],
+    [
+        "Compilation",
+        {
+            description: "Indicates whether the track belongs to a compilation album featuring various artists or previously released material."
+        }
+    ],
+    [
+        "Compilation_String",
+        {
+            description: "Displays [Compilation](#field:Compilation) as a human-readable string."
+        }
+    ],
+    [
+        "Domain",
+        {
+            description: "Indicates the overarching thematic universe, franchise world, or broader series group to which the title belongs."
+        }
+    ],
+    [
+        "Grouping",
+        {
+            description: "Indicates a custom category or work-level grouping used by media players to organize related tracks (such as movements of a classical symphony)."
+        }
+    ],
+    [
+        "Movie",
+        {
+            description: "Indicates the title of the film or feature-length video production."
+        }
+    ],
+    [
+        "Movie_More",
+        {
+            description: "Provides additional descriptive details, taglines, or subtitle information associated with the [Movie](#field:Movie)."
+        }
+    ],
+    [
+        "Movie_Url",
+        {
+            displayName: "Movie URL",
+            description: "Provides an official webpage or reference URL for the [Movie](#field:Movie)."
+        }
+    ],
+    [
+        "Original_Album",
+        {
+            description: "Indicates the title of the [Album](#field:Album) on which the track was originally released."
+        }
+    ],
+    [
+        "Original_Movie",
+        {
+            description: "Indicates the original title of the [Movie](#field:Movie), typically used when the file holds a localized, translated, or remake title."
+        }
+    ],
+    [
+        "Original_Part",
+        {
+            description: "Indicates the original title or identifier of the [Part](#field:Part) before adaptation or localization."
+        }
+    ],
+    [
+        "Original_Track",
+        {
+            description: "Indicates the original title of the [Track](#field:Track), typically used for covers, translations, or remixes."
+        }
+    ],
+    [
+        "Part",
+        {
+            description: "Indicates the title or name of a multi-part division within a work (such as an act, disc, volume, or episode segment)."
+        }
+    ],
+    [
+        "Part_Position",
+        {
+            description: "Indicates the sequential number of the current [Part](#field:Part) within the work."
+        }
+    ],
+    [
+        "Part_Position_Total",
+        {
+            description: "Indicates the total number of parts in the work, paired with [Part Position](#field:Part_Position)."
+        }
+    ],
+    [
+        "Reel",
+        {
+            description: "Indicates the name or identifier of the physical film reel or tape roll from which the segment originates."
+        }
+    ],
+    [
+        "Reel_Position",
+        {
+            description: "Indicates the sequential number of the current [Reel](#field:Reel) within the production."
+        }
+    ],
+    [
+        "Reel_Position_Total",
+        {
+            description: "Indicates the total number of reels in the production, paired with [Reel Position](#field:Reel_Position)."
+        }
+    ],
+    [
+        "Season",
+        {
+            description: "Indicates the title or name of the television or series season."
+        }
+    ],
+    [
+        "Season_Position",
+        {
+            description: "Indicates the sequential season number within the series."
+        }
+    ],
+    [
+        "Season_Position_Total",
+        {
+            description: "Indicates the total number of seasons in the series, paired with [Season Position](#field:Season_Position)."
+        }
+    ],
+    [
+        "SubTrack",
+        {
+            displayName: "Sub-Track",
+            description: "Indicates the title of a sub-track, movement, or embedded chapter segment within a larger [Track](#field:Track)."
+        }
+    ],
+    [
+        "Title",
+        {
+            description: "Indicates the primary title of the media file or piece of content."
+        }
+    ],
+    [
+        "Title_More",
+        {
+            description: "Provides additional descriptive details, version notes, or subtitle information associated with the [Title](#field:Title)."
+        }
+    ],
+    [
+        "Title_Url",
+        {
+            displayName: "Title URL",
+            description: "Provides an official webpage or reference URL associated with the [Title](#field:Title)."
+        }
+    ],
+    [
+        "Track",
+        {
+            description: "Indicates the title of the individual song, audio track, or episode."
+        }
+    ],
+    [
+        "Track_More",
+        {
+            description: "Provides additional descriptive details, mix notes, or subtitle information associated with the [Track](#field:Track)."
+        }
+    ],
+    [
+        "Track_Position",
+        {
+            description: "Indicates the sequential track or episode number of the [Track](#field:Track) within its [Album](#field:Album) or [Season](#field:Season)."
+        }
+    ],
+    [
+        "Track_Position_Total",
+        {
+            description: "Indicates the total number of tracks or episodes in the [Album](#field:Album) or [Season](#field:Season), paired with [Track Position](#field:Track_Position)."
+        }
+    ],
+    [
+        "Track_Sort",
+        {
+            description: "Provides an alternate version of [Track](#field:Track) formatted for alphabetical sorting."
+        }
+    ],
+    [
+        "Track_Url",
+        {
+            displayName: "Track URL",
+            description: "Provides an official webpage or reference URL for the [Track](#field:Track)."
+        }
+    ],
+
+    //? Extra fields missing from https://mediainfo.js/api (likely unlisted/deprecated)
+    [
+        "Codec",
+        {
+            description: "Indicates the standardized name of the format, codec, or container used by the stream.\n\nThis field is deprecated. Use [Format](#field:Format) instead."
+        }
+    ],
+    [
+        "Codec_Extensions",
+        {
+            description: "Lists the common file name extensions associated with the identified codec or container, separated by spaces.\n\nThis field is deprecated. Use [Format Extensions](#field:Format_Extensions) instead."
+        }
+    ],
+    [
+        "Codec_Info",
+        {
+            description: "Provides additional descriptive details or background information about the identified codec or container.\n\nThis field is deprecated. Use [Format Info](#field:Format_Info) instead."
+        }
+    ],
+    [
+        "Codec_Settings",
+        {
+            description: "Specifies advanced or non-default parameter settings used by the codec.\n\nThis field is deprecated. Use [Format Settings](#field:Format_Settings) instead."
+        }
+    ],
+    [
+        "Codec_Settings_Automatic",
+        {
+            description: "Indicates whether the encoder automatically selected the [Codec Settings](#field:Codec_Settings) rather than using manual overrides.\n\nThis field is deprecated."
+        }
+    ],
+    [
+        "Codec_String",
+        {
+            description: "Displays [Codec](#field:Codec) as a human-readable string.\n\nThis field is deprecated. Use [Format String](#field:Format_String) instead."
+        }
+    ],
+    [
+        "Codec_Url",
+        {
+            displayName: "Codec URL",
+            description: "Provides a reference URL containing official specifications or documentation for the codec.\n\nThis field is deprecated. Use [Format URL](#field:Format_Url) instead."
+        }
+    ],
+    [
+        "Movie_Country",
+        {
+            description: "Indicates the country of origin or production for the [Movie](#field:Movie)."
+        }
+    ],
     //TODO: Add more
 ]);

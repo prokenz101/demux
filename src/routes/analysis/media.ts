@@ -4,6 +4,7 @@ import type { Component } from "svelte";
 import DefaultSidebar from "./sidebar/DefaultSidebar.svelte";
 
 export interface SidebarFormat {
+    node?: TreeNode;
     displayName?: string;
     description?: string;
     documentation?: Component<DocumentationProps>;
@@ -19,6 +20,7 @@ export interface SidebarActionButton {
 }
 
 export interface DocumentationProps {
+    node?: TreeNode;
     description?: string;
     value?: string;
     fieldKey?: string;
@@ -36,6 +38,7 @@ export function getMediaFieldConfig(child: TreeNode): SidebarFormat {
     const config = mediaFieldMap.get(child.label);
 
     return {
+        node: child,
         displayName: config?.displayName || formatKey(child.displayName),
         documentation: config?.documentation || DefaultSidebar,
         description: config?.description,

@@ -12,7 +12,7 @@
     } from "./tree/parser";
     import JSONNodeView from "./tree/Tree.svelte";
     import {
-        setSideBarAction,
+        setSidebarAction,
         openAction,
     } from "./sidebar/sharedSidebar.svelte";
     import {
@@ -53,11 +53,15 @@
                 allBranchIDs = getAllBranchIDs(tree);
                 openIds = new Set<string>(allBranchIDs);
 
-                setSidebarField("root.0.@ref");
-                activeKey = "root.0.@ref";
-                documentationEntry = getMediaFieldConfigForField("root.0.@ref");
-                if (documentationEntry.documentation)
-                    Documentation = documentationEntry?.documentation;
+                //* If someone goes back to the main menu with mouse button 4, then comes back with mouse button 5
+                //* This will use the history to show whatever was there before
+                const savedNodeId = history.state?.sidebarNodeId;
+                const initialFieldId =
+                    savedNodeId && nodesMap.has(savedNodeId)
+                        ? savedNodeId
+                        : "root.0.@ref";
+
+                setSidebarField(initialFieldId, "replace");
             }
         } catch (err) {
             console.error("Failed to load details:", err);
@@ -109,14 +113,54 @@
         return node ? getMediaFieldConfig(node) : {};
     }
 
-    export function setSidebarField(fieldId: string) {
+    export function setSidebarField(
+        fieldId: string,
+        historyMode: "push" | "replace" | "skip" = "push",
+    ) {
         const node = nodesMap.get(fieldId);
+        if (!node) return;
 
-        if (node) {
-            activeFieldId = fieldId;
-            activeKey = node.label;
-            activeValue = node.type === "leaf" ? node.value : "";
-            activeDisplayPath = node.displayPath;
+        //* This entire thing is just so that back and forth navigation (like with mouse button 4 and 5) works cleanly
+        if (historyMode === "push") {
+            if (
+                activeFieldId &&
+                history.state?.sidebarNodeId !== activeFieldId
+            ) {
+                history.replaceState(
+                    { ...history.state, sidebarNodeId: activeFieldId },
+                    "",
+                );
+            }
+            //* Only push if we're actually switching to a different field
+            if (activeFieldId !== fieldId) {
+                history.pushState(
+                    { ...history.state, sidebarNodeId: fieldId },
+                    "",
+                );
+            }
+        } else if (historyMode === "replace") {
+            history.replaceState(
+                { ...history.state, sidebarNodeId: fieldId },
+                "",
+            );
+        }
+
+        activeFieldId = fieldId;
+        activeKey = node.label;
+        activeValue = node.type === "leaf" ? node.value : "";
+        activeDisplayPath = node.displayPath;
+
+        //* Reset scrollbar back to the top when switching sidebar
+        const scrollContainer = document.querySelector(".sidebar-container");
+        if (scrollContainer) {
+            scrollContainer.scrollTop = 0;
+        }
+    }
+
+    function handlePopState(event: PopStateEvent) {
+        const nodeId = event.state?.sidebarNodeId;
+        if (nodeId) {
+            setSidebarField(nodeId, "skip");
         }
     }
 
@@ -132,8 +176,8 @@
         await invoke<string>("open_enclosing_folder", { path });
     }
 
-    setSideBarAction.setSidebar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
-    setSideBarAction.openSideBar = openSidebar;
+    setSidebarAction.setSidebar = setSidebarField; //* This is so we can call this function from the child Tree.svelte
+    setSidebarAction.openSideBar = openSidebar;
     openAction.openFile = openFile;
     openAction.openFileLocation = openFileLocation;
 
@@ -268,6 +312,7 @@
             <div class="sidebar-body">
                 {#if Documentation as Component<DocumentationProps>}
                     <Documentation
+                        node={nodesMap.get(activeFieldId)}
                         description={documentationEntry?.description ?? ""}
                         value={activeValue}
                         fieldKey={activeFieldId}
@@ -278,3 +323,5 @@
         </aside>
     </div>
 </main>
+
+<svelte:window onpopstate={handlePopState} />

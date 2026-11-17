@@ -1,14 +1,65 @@
 <script lang="ts">
     import type { DocumentationProps } from "../media";
+    import { setSidebarAction } from "./sharedSidebar.svelte";
+    import { marked } from "marked";
+    import { nodesMap, type TreeNode } from "../tree/parser";
 
-    let { value, description, actions }: DocumentationProps = $props();
+    let { node, description, value, actions }: DocumentationProps = $props();
+
+    function handleDescriptionClick(event: any) {
+        const link = event.target.closest("a");
+        if (!link) return;
+
+        const href = link.getAttribute("href");
+        if (href && href.startsWith("#field:")) {
+            event.preventDefault();
+            const fieldKey = href.slice("#field:".length);
+
+            if (node) {
+                const targetNode = findTargetFieldNode(node, fieldKey);
+                if (targetNode) {
+                    setSidebarAction.setSidebar(targetNode.id);
+                }
+            }
+        }
+    }
+
+    //* This is to recursively search backwards from a node
+    //* So that the hyperlinks in the sidebar work backwards too
+    function findTargetFieldNode(
+        startNode: TreeNode,
+        fieldKey: string,
+    ): TreeNode | null {
+        let currentParentId = startNode.id.split(".").slice(0, -2).join(".");
+
+        while (currentParentId) {
+            const parentNode = nodesMap.get(currentParentId);
+            if (parentNode && parentNode.type === "branch") {
+                const match = parentNode.children.find(
+                    (child) => child && child.label === fieldKey,
+                );
+                if (match) return match;
+            }
+
+            const lastDot = currentParentId.lastIndexOf(".");
+            if (lastDot === -1) break;
+            currentParentId = currentParentId.slice(0, lastDot);
+        }
+
+        return null;
+    }
 </script>
 
 <div class="sidebar-container">
-    {#if description != ""}
+    {#if description && description != ""}
         <div class="sidebar-container-div">
             <p class="sidebar-container-div-header">Description</p>
-            <p class="description-p">{description}</p>
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <div class="description-p" onclick={handleDescriptionClick}>
+                {@html marked.parse(description)}
+            </div>
+            <!-- TODO: Highlight the field that is shown in the sidebar, on the tree -->
         </div>
     {/if}
 
@@ -79,10 +130,33 @@
         gap: 10px;
     }
 
+    .description-p :global(em) {
+        font-style: italic;
+    }
+
     .description-p {
         margin: 0px 0px 3px 0px;
         line-height: 1.15;
-        white-space: pre-wrap;
+    }
+
+    .description-p :global(p) {
+        margin: 0px 0px 1em 0px;
+    }
+
+    .description-p :global(p:last-child) {
+        margin-bottom: 0px;
+    }
+
+    .description-p :global(a[href^="#field:"]) {
+        color: #60a5fa;
+        /* text-decoration: underline;
+        text-decoration-style: solid;
+        text-underline-offset: 1px; */
+        cursor: pointer;
+    }
+
+    .description-p :global(a[href^="#field:"]:hover) {
+        color: #93c5fd;
     }
 
     .value-header-copy-div {
@@ -172,7 +246,9 @@
         font-weight: 600;
         cursor: pointer;
         user-select: none;
-        transition: background-color 0.075s ease, color 0.075s ease;
+        transition:
+            background-color 0.075s ease,
+            color 0.075s ease;
     }
 
     .actions-btns-list button img {
