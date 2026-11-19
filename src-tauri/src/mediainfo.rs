@@ -36,6 +36,13 @@ extern "C" {
     fn MediaInfo_Close(handle: *mut c_void);
     fn MediaInfo_Option(handle: *mut c_void, option: *const u16, value: *const u16) -> *const u16;
     fn MediaInfo_Inform(handle: *mut c_void, reserved: usize) -> *const u16;
+    fn MediaInfo_GetI(
+        handle: *mut c_void,
+        stream_kind: usize,
+        stream_number: usize,
+        parameter_index: usize,
+        kind_of_info: usize,
+    ) -> *const u16;
     fn MediaInfo_Get(
         handle: *mut c_void,
         stream_kind: usize,
@@ -92,6 +99,30 @@ impl MediaInfo {
     /// Query the number of streams of a specific kind (e.g., number of audio tracks)
     pub fn count_streams(&self, kind: StreamKind) -> usize {
         unsafe { MediaInfo_Count_Get(self.handle, kind as usize, usize::MAX) }
+    }
+
+    /// Query the number of fields in a specific stream
+    pub fn count_fields(&self, kind: StreamKind, stream_index: usize) -> usize {
+        unsafe { MediaInfo_Count_Get(self.handle, kind as usize, stream_index) }
+    }
+
+    /// Query a field by its index and information kind
+    pub fn get_field(
+        &self,
+        kind: StreamKind,
+        stream_index: usize,
+        field_index: usize,
+        info_kind: InfoKind,
+    ) -> String {
+        unsafe {
+            from_wide_ptr(MediaInfo_GetI(
+                self.handle,
+                kind as usize,
+                stream_index,
+                field_index,
+                info_kind as usize,
+            ))
+        }
     }
 
     /// Query a specific parameter by name for a stream
