@@ -1,8 +1,8 @@
-import type { SidebarFormat } from "../media";
+import type { MediaFieldConfig, SidebarFormat } from "../media";
 import { openAction } from "./sharedSidebar.svelte";
 
 
-export const mediaFieldMap = new Map<string, SidebarFormat>([
+export const mediaFieldMap = new Map<string, MediaFieldConfig>([
     //TODO: Change all the documentations to be much more in depth, with more examples
     ["", {}], //* Initial value, will never be seen
     [
@@ -187,13 +187,19 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Delay",
         {
-            description: "Indicates the starting time offset (in milliseconds) applied to the stream to synchronize its playback with other tracks in the file.\n\nPositive values delay the start of the stream, while negative values shift it earlier relative to the beginning of the container."
+            description: {
+                default: "Indicates the starting time offset (in milliseconds) applied to the stream to synchronize its playback with other tracks in the file.\n\nPositive values delay the start of the stream, while negative values shift it earlier relative to the beginning of the container.",
+                General: "Indicates the starting time offset (in milliseconds) applied to the container or primary stream relative to the beginning of the file."
+            }
         }
     ],
     [
         "Delay_DropFrame",
         {
-            description: "Indicates whether the timecode used for [Delay](#field:Delay) uses drop-frame numbering to stay aligned with real-world clock time (common in 29.97 or 59.94 fps NTSC video)."
+            description: {
+                default: "Indicates whether the timecode used for [Delay](#field:Delay) uses drop-frame numbering to stay aligned with real-world clock time.",
+                General: "Indicates whether the container timecode used for [Delay](#field:Delay) uses drop-frame numbering to stay aligned with real-world clock time."
+            }
         }
     ],
     [
@@ -253,7 +259,10 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Duration",
         {
-            description: "Indicates the total running time of the file, determined by the container header or the longest individual stream."
+            description: {
+                default: "Indicates the total running time of the stream.",
+                General: "Indicates the total running time of the file, determined by the container header or the longest individual stream."
+            }
         }
     ],
     [
@@ -610,31 +619,46 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "FrameCount",
         {
-            description: "Indicates the total number of frames in the stream, provided the frame rate remains constant throughout the entire track."
+            description: {
+                default: "Indicates the total number of frames in the stream, provided the frame rate remains constant throughout the entire track.",
+                General: "Indicates the total number of frames in the primary stream, provided the frame rate remains constant throughout the entire track."
+            }
         }
     ],
     [
         "FrameRate",
         {
-            description: "Indicates the playback frame rate of the stream expressed in frames per second."
+            description: {
+                default: "Indicates the playback frame rate of the stream expressed in frames per second.",
+                General: "Indicates the playback frame rate of the primary stream expressed in frames per second.",
+            }
         }
     ],
     [
         "FrameRate_Den",
         {
-            description: "Indicates the denominator component of the fractional [Frame Rate](#field:FrameRate) value."
+            description: {
+                default: "Indicates the denominator component of the fractional [Frame Rate](#field:FrameRate) value.",
+                General: "Indicates the denominator component of the fractional [Frame Rate](#field:FrameRate) value for the primary stream.",
+            }
         }
     ],
     [
         "FrameRate_Num",
         {
-            description: "Indicates the numerator component of the fractional [Frame Rate](#field:FrameRate) value."
+            description: {
+                default: "Indicates the numerator component of the fractional [Frame Rate](#field:FrameRate) value.",
+                General: "Indicates the numerator component of the fractional [Frame Rate](#field:FrameRate) value for the primary stream."
+            }
         }
     ],
     [
         "FrameRate_String",
         {
-            description: "Displays [Frame Rate](#field:FrameRate) as a human-readable string with its unit of measurement."
+            description: {
+                default: "Displays [Frame Rate](#field:FrameRate) as a human-readable string with its unit of measurement.",
+                General: "Displays the primary stream's [Frame Rate](#field:FrameRate) as a human-readable string with its unit of measurement."
+            }
         }
     ],
     [
@@ -703,7 +727,10 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Interleaved",
         {
-            description: "Indicates whether audio and video streams are interleaved (multiplexed) together within the container."
+            description: {
+                default: "Indicates whether the stream data is interleaved with other tracks within the container.",
+                General: "Indicates whether audio and video streams are interleaved (multiplexed) together within the container."
+            }
         }
     ],
     [
@@ -2180,7 +2207,10 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
     [
         "Title",
         {
-            description: "Indicates the primary title of the media file or piece of content."
+            description: {
+                default: "Indicates the human-readable title or label assigned to this specific track.",
+                General: "Indicates the primary title of the media file or piece of content."
+            }
         }
     ],
     [
@@ -2282,6 +2312,202 @@ export const mediaFieldMap = new Map<string, SidebarFormat>([
         "Movie_Country",
         {
             description: "Indicates the country of origin or production for the [Movie](#field:Movie)."
+        }
+    ],
+
+    //? https://mediainfo.js.org/api/interface/ImageTrack/#Properties
+    [
+        "Active_DisplayAspectRatio",
+        {
+            description: {
+                default: "Indicates the proportional ratio between the [Active Width](#field:Active_Width) and [Active Height](#field:Active_Height) of the frame, excluding any letterbox or pillarbox black bars.",
+
+                Image: "Indicates the proportional ratio between the [Active Width](#field:Active_Width) and [Active Height](#field:Active_Height) of the image frame, excluding any letterbox or pillarbox black bars."
+            }
+        }
+    ],
+    [
+        "Active_DisplayAspectRatio_String",
+        {
+            description: "Displays [Active Display Aspect Ratio](#field:Active_DisplayAspectRatio) as a human-readable ratio string."
+        }
+    ],
+    [
+        "Active_Height",
+        {
+            description: {
+                default: "Indicates the vertical pixel resolution of the active content area, excluding any matted black bars (letterboxing) encoded into the frame.",
+
+                Image: "Indicates the vertical pixel resolution of the actual image content, excluding any matted black bars (letterboxing) encoded into the frame."
+            }
+        }
+    ],
+    [
+        "Active_Height_String",
+        {
+            description: "Displays [Active Height](#field:Active_Height) as a human-readable string with its unit of measurement."
+        }
+    ],
+    [
+        "Active_Width",
+        {
+            description: {
+                default: "Indicates the horizontal pixel resolution of the active content area, excluding any matted black bars (pillarboxing) encoded into the frame.",
+
+                Image: "Indicates the horizontal pixel resolution of the actual image content, excluding any matted black bars (pillarboxing) encoded into the frame."
+            }
+        }
+    ],
+    [
+        "Active_Width_String",
+        {
+            description: "Displays [Active Width](#field:Active_Width) as a human-readable string with its unit of measurement."
+        }
+    ],
+    [
+        "AlternateGroup",
+        {
+            description: "Indicates the identifier of an alternate group used by containers (such as MP4/MOV or HEIF) to bundle mutually exclusive variants of the same track—such as different resolutions, thumbnails, or language versions—so players select only one at a time."
+        }
+    ],
+    [
+        "AlternateGroup_String",
+        {
+            description: "Displays [Alternate Group](#field:AlternateGroup) as a human-readable string."
+        }
+    ],
+    [
+        "BitDepth",
+        {
+            description: {
+                default: "Indicates the number of bits used to represent each individual sample, pixel channel, or element in the stream.",
+
+                Image: "Indicates the number of bits used to represent each color channel per pixel.\n\nHigher bit depths allow finer tonal gradations and dramatically reduce color banding in smooth gradients such as skies or shadows."
+            }
+        }
+    ],
+    [
+        "BitDepth_String",
+        {
+            description: "Displays [Bit Depth](#field:BitDepth) as a human-readable string with its unit of measurement."
+        }
+    ],
+    [
+        "ChromaSubsampling",
+        {
+            description: {
+                default: "Indicates the sampling ratio between luminance (brightness) and chrominance (color) information in the encoded stream.\n\nBecause human vision is far more sensitive to brightness detail than color sharpness, codecs compress color resolution horizontally and/or vertically relative to brightness to save bandwidth without noticeable visual loss.",
+
+                Image: "Indicates the sampling ratio between luminance (brightness) and chrominance (color) information in the encoded image.\n\nBecause human vision is far more sensitive to brightness detail than color sharpness, codecs compress color resolution horizontally and/or vertically relative to brightness to save bandwidth without noticeable visual loss."
+            }
+        }
+    ],
+    [
+        "ColorSpace",
+        {
+            description: "Indicates the color model or pixel representation used to encode the visual data."
+        }
+    ],
+    [
+        "colour_description_present",
+        {
+            displayName: "Color Description Present",
+            description: "Indicates whether explicit color space metadata (such as [Color Primaries](#field:colour_primaries), transfer characteristics, and matrix coefficients) is embedded in the stream."
+        }
+    ],
+    [
+        "colour_description_present_Original",
+        {
+            displayName: "Color Description Present (Original)",
+            description: "Indicates the conflicting [Color Description Present](#field:colour_description_present) flag reported by a secondary metadata layer (such as the container header) when it disagrees with the primary bitstream value."
+        }
+    ],
+    [
+        "colour_description_present_Original_Source",
+        {
+            displayName: "Color Description Present (Original Source)",
+            description: "Indicates the metadata source (such as container or bitstream) from which [Color Description Present (Original)](#field:colour_description_present_Original) was extracted."
+        }
+    ],
+    [
+        "colour_description_present_Source",
+        {
+            displayName: "Color Description Present (Source)",
+            description: "Indicates the metadata source (such as container or bitstream) from which [Color Description Present](#field:colour_description_present) was extracted."
+        }
+    ],
+    [
+        "colour_primaries",
+        {
+            displayName: "Color Primaries",
+            description: "Specifies the chromaticity coordinates of the red, green, and blue primary colors (and white point) used to define the color gamut of the stream."
+        }
+    ],
+    [
+        "colour_primaries_Original",
+        {
+            displayName: "Color Primaries (Original)",
+            description: "Indicates the conflicting [Color Primaries](#field:colour_primaries) value reported by a secondary metadata layer when it disagrees with the primary bitstream value."
+        }
+    ],
+    [
+        "colour_primaries_Original_Source",
+        {
+            displayName: "Color Primaries (Original Source)",
+            description: "Indicates the metadata source (such as container or bitstream) from which [Color Primaries (Original)](#field:colour_primaries_Original) was extracted."
+        }
+    ],
+    [
+        "colour_primaries_Source",
+        {
+            displayName: "Color Primaries (Source)",
+            description: "Indicates the metadata source (such as container or bitstream) from which [Color Primaries](#field:colour_primaries) was extracted."
+        }
+    ],
+    [
+        "colour_range",
+        {
+            displayName: "Color Range",
+            description: "Indicates whether color component values span the full digital range (0-255 for 8-bit) or limited broadcast TV range (16-235 for luma, 16-240 for chroma) within the [Color Space](#field:ColorSpace)."
+        }
+    ],
+    [
+        "colour_range_Original",
+        {
+            displayName: "Color Range (Original)",
+            description: "Indicates the conflicting [Color Range](#field:colour_range) value reported by a secondary metadata layer when it disagrees with the primary bitstream value."
+        }
+    ],
+    [
+        "colour_range_Original_Source",
+        {
+            displayName: "Color Range (Original Source)",
+            description: "Indicates the metadata source (such as container or bitstream) from which [Color Range (Original)](#field:colour_range_Original) was extracted."
+        }
+    ],
+    [
+        "colour_range_Source",
+        {
+            displayName: "Color Range (Source)",
+            description: "Indicates the metadata source (such as container or bitstream) from which [Color Range](#field:colour_range) was extracted."
+        }
+    ],
+    [
+        "Compression_Mode",
+        {
+            description: "Indicates whether the stream uses lossy compression (discarding imperceptible data to reduce size) or lossless compression (preserving bit-exact original data)."
+        }
+    ],
+    [
+        "Compression_Mode_String",
+        {
+            description: "Displays [Compression Mode](#field:Compression_Mode) as a human-readable string."
+        }
+    ],
+    [
+        "Compression_Ratio",
+        {
+            description: "Indicates the ratio between the uncompressed raw stream size and the compressed [Stream Size](#field:StreamSize), showing how tightly the media data has been compressed."
         }
     ],
     //TODO: Add more
